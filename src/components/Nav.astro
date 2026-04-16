@@ -1,0 +1,50 @@
+---
+import { useTranslations } from '../i18n/utils';
+import type { Lang } from '../i18n/utils';
+export interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const base = lang === 'fr' ? '/fr' : lang === 'ko' ? '/ko' : '';
+const isHome = ['/', '/fr/', '/ko/', '/fr', '/ko'].includes(Astro.url.pathname);
+const p = (path: string) => isHome ? path : `${base}${path === '/' ? '/' : path}`;
+---
+<nav>
+  <a href={`${base}/`} class="nav-logo">
+    <img src="/logo.png" alt="IT-CONCEPT" />
+  </a>
+  <ul class="nav-links">
+    <li><a href={`${base}/#services`}>{t('nav.services')}</a></li>
+    <li><a href={`${base}/#expertise`}>{t('nav.expertise')}</a></li>
+    <li><a href={`${base}/blog/`}>{t('nav.blog')}</a></li>
+    <li><a href={`${base}/events/`}>{t('nav.events')}</a></li>
+    <li><a href={`${base}/careers/`}>{t('nav.careers')}</a></li>
+    <li><a href={`${base}/#contact`}>{t('nav.contact')}</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:12px">
+    <a href="https://calendly.com/it-concept" target="_blank" rel="noopener" class="nav-cta">
+      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      {t('nav.booking')}
+    </a>
+    <div class="lang-switcher">
+      <a href="/" class:list={['lang-btn', { active: lang === 'en' }]}>EN</a>
+      <a href="/fr/" class:list={['lang-btn', { active: lang === 'fr' }]}>FR</a>
+      <a href="/ko/" class:list={['lang-btn', { active: lang === 'ko' }]}>KO</a>
+    </div>
+    <button class="nav-hamburger" onclick="toggleMobileNav()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-nav" id="mobileNav">
+  <a href={`${base}/#services`} onclick="toggleMobileNav()">{t('nav.services')}</a>
+  <a href={`${base}/#expertise`} onclick="toggleMobileNav()">{t('nav.expertise')}</a>
+  <a href={`${base}/blog/`} onclick="toggleMobileNav()">{t('nav.blog')}</a>
+  <a href={`${base}/events/`} onclick="toggleMobileNav()">{t('nav.events')}</a>
+  <a href={`${base}/careers/`} onclick="toggleMobileNav()">{t('nav.careers')}</a>
+  <a href={`${base}/#contact`} onclick="toggleMobileNav()">{t('nav.contact')}</a>
+  <div class="mobile-lang">
+    <a href="/" class:list={['lang-btn', { active: lang === 'en' }]}>EN</a>
+    <a href="/fr/" class:list={['lang-btn', { active: lang === 'fr' }]}>FR</a>
+    <a href="/ko/" class:list={['lang-btn', { active: lang === 'ko' }]}>KO</a>
+  </div>
+</div>

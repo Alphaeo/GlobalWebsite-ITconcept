@@ -1,0 +1,14 @@
+---
+import { useTranslations } from '../i18n/utils';
+import type { Lang } from '../i18n/utils';
+export interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+<div class="cookie-banner" id="cookie-banner">
+  <span>{t('cookie.text')}</span>
+  <div class="cookie-actions">
+    <button class="cookie-btn cookie-btn-decline" onclick="dismissCookies(false)">{t('cookie.decline')}</button>
+    <button class="cookie-btn cookie-btn-accept" onclick="dismissCookies(true)">{t('cookie.accept')}</button>
+  </div>
+</div>

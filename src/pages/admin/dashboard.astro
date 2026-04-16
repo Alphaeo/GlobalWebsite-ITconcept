@@ -1,0 +1,52 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import { createSupabaseServerClient, supabase } from '../../lib/supabase';
+const sb = createSupabaseServerClient(Astro.cookies);
+const { data: { session } } = await sb.auth.getSession();
+if (!session) return Astro.redirect('/admin/');
+const [{ count: articles }, { count: events }, { count: jobs }] = await Promise.all([
+  supabase.from('articles').select('*', { count: 'exact', head: true }),
+  supabase.from('events').select('*', { count: 'exact', head: true }),
+  supabase.from('job_offers').select('*', { count: 'exact', head: true }),
+]);
+const { data: recentArticles } = await supabase.from('articles').select('id,title_en,published,created_at').order('created_at', { ascending: false }).limit(5);
+---
+<AdminLayout title="Dashboard" active="dashboard">
+  <div class="admin-header">
+    <h1>Dashboard</h1>
+    <span style="font-size:0.85rem;color:var(--text-muted)">Welcome, {session.user.email}</span>
+  </div>
+  <div class="admin-stat-grid">
+    <div class="admin-stat">
+      <div class="admin-stat-num">{articles ?? 0}</div>
+      <div class="admin-stat-label">Articles</div>
+    </div>
+    <div class="admin-stat">
+      <div class="admin-stat-num">{events ?? 0}</div>
+      <div class="admin-stat-label">Events</div>
+    </div>
+    <div class="admin-stat">
+      <div class="admin-stat-num">{jobs ?? 0}</div>
+      <div class="admin-stat-label">Job Offers</div>
+    </div>
+  </div>
+  <div class="admin-card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+      <h2 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700">Recent articles</h2>
+      <a href="/admin/articles/new" class="btn-sm btn-sm-primary">+ New article</a>
+    </div>
+    <table class="admin-table">
+      <thead><tr><th>Title</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
+      <tbody>
+        {recentArticles?.map(a => (
+          <tr>
+            <td>{a.title_en || '—'}</td>
+            <td><span class:list={['badge', a.published ? 'badge-green' : 'badge-grey']}>{a.published ? 'Published' : 'Draft'}</span></td>
+            <td>{new Date(a.created_at).toLocaleDateString('en')}</td>
+            <td><a href={`/admin/articles/${a.id}`} class="btn-sm btn-sm-outline">Edit</a></td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</AdminLayout>

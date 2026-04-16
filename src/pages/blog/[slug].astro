@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { supabase } from '../../lib/supabase';
+const { slug } = Astro.params;
+const { data: article } = await supabase.from('articles').select('*').eq('slug', slug).eq('published', true).single();
+if (!article) return Astro.redirect('/blog/');
+---
+<BaseLayout lang="en" title={article.title_en}>
+  <article style="padding-top: calc(var(--nav-h) + 60px); max-width: 780px; margin: 0 auto; padding-left: 5%; padding-right: 5%; padding-bottom: 100px;">
+    {article.cover_url && <img src={article.cover_url} alt={article.title_en} style="width:100%;border-radius:16px;margin-bottom:40px;max-height:400px;object-fit:cover" />}
+    {article.tags?.length && <div class="card-tags" style="margin-bottom:16px">{article.tags.map((t: string) => <span class="card-tag">{t}</span>)}</div>}
+    <h1 style="font-family:var(--font-display);font-size:clamp(1.8rem,3vw,2.6rem);font-weight:700;line-height:1.2;margin-bottom:16px">{article.title_en}</h1>
+    <div style="display:flex;gap:16px;font-size:0.85rem;color:var(--text-muted);margin-bottom:40px;border-bottom:1px solid var(--grey2);padding-bottom:20px">
+      {article.author && <span>{article.author}</span>}
+      {article.published_at && <span>{new Date(article.published_at).toLocaleDateString('en', { year: 'numeric', month: 'long', day: 'numeric' })}</span>}
+    </div>
+    <div style="line-height:1.8;color:var(--text);font-size:1.02rem" set:html={article.content_en} />
+    <div style="margin-top:48px;padding-top:24px;border-top:1px solid var(--grey2)">
+      <a href="/blog/" style="color:var(--red);text-decoration:none;font-weight:600">← Back to Blog</a>
+    </div>
+  </article>
+</BaseLayout>

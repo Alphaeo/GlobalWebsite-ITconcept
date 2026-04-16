@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { useTranslations } from '../../i18n/utils';
+import { supabase } from '../../lib/supabase';
+const lang = 'en';
+const t = useTranslations(lang);
+const { data: jobs } = await supabase.from('job_offers').select('*').eq('published', true).order('created_at', { ascending: false });
+---
+<BaseLayout lang={lang} title="Careers — IT-CONCEPT">
+  <section style="padding-top: calc(var(--nav-h) + 60px)">
+    <span class="section-label reveal">{t('careers.label')}</span>
+    <h1 class="section-title reveal">{t('careers.title')}</h1>
+    <p class="section-desc reveal">{t('careers.desc')}</p>
+    {!jobs?.length ? (
+      <div class="empty-state">
+        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        <p style="margin-bottom:24px">{t('careers.empty')}</p>
+        <a href="mailto:rh@it-concept.kr?subject=Candidature spontanée" class="btn-primary">{t('careers.spontaneous')}</a>
+      </div>
+    ) : (
+      <div class="jobs-list reveal">
+        {jobs.map(job => (
+          <div class="job-card">
+            <div class="job-info">
+              <h3>{job.title_en}</h3>
+              <div class="job-badges">
+                <span class="job-badge">{job.contract_type}</span>
+                <span class="job-badge">{job.location}</span>
+              </div>
+              {job.deadline && <p class="job-deadline" style="margin-top:6px">{t('careers.deadline')}: {new Date(job.deadline).toLocaleDateString('en', { year: 'numeric', month: 'long', day: 'numeric' })}</p>}
+            </div>
+            <a href={`mailto:rh@it-concept.kr?subject=Application — ${job.title_en}`} class="btn-primary" style="white-space:nowrap">{t('careers.apply')}</a>
+          </div>
+        ))}
+        <div style="text-align:center;margin-top:32px">
+          <a href="mailto:rh@it-concept.kr?subject=Candidature spontanée" class="btn-outline">{t('careers.spontaneous')}</a>
+        </div>
+      </div>
+    )}
+  </section>
+</BaseLayout>

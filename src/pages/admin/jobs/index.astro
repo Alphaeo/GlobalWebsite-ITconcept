@@ -1,0 +1,41 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import { createSupabaseServerClient, supabase } from '../../../lib/supabase';
+const sb = createSupabaseServerClient(Astro.cookies);
+const { data: { session } } = await sb.auth.getSession();
+if (!session) return Astro.redirect('/admin/');
+if (Astro.request.method === 'POST') {
+  const form = await Astro.request.formData();
+  const id = form.get('delete_id') as string;
+  if (id) await supabase.from('job_offers').delete().eq('id', id);
+}
+const { data: jobs } = await supabase.from('job_offers').select('id,title_en,contract_type,location,deadline,published,created_at').order('created_at', { ascending: false });
+---
+<AdminLayout title="Job Offers" active="jobs">
+  <div class="admin-header">
+    <h1>Job Offers</h1>
+    <a href="/admin/jobs/new" class="btn-sm btn-sm-primary">+ New offer</a>
+  </div>
+  <div class="admin-card">
+    <table class="admin-table">
+      <thead><tr><th>Position</th><th>Contract</th><th>Location</th><th>Status</th><th>Actions</th></tr></thead>
+      <tbody>
+        {jobs?.length ? jobs.map(j => (
+          <tr>
+            <td style="font-weight:600">{j.title_en || '(no title)'}</td>
+            <td>{j.contract_type}</td>
+            <td>{j.location}</td>
+            <td><span class:list={['badge', j.published ? 'badge-green' : 'badge-grey']}>{j.published ? 'Published' : 'Draft'}</span></td>
+            <td style="display:flex;gap:8px">
+              <a href={`/admin/jobs/${j.id}`} class="btn-sm btn-sm-outline">Edit</a>
+              <form method="POST" onsubmit="return confirm('Delete this offer?')">
+                <input type="hidden" name="delete_id" value={j.id} />
+                <button type="submit" class="btn-sm btn-sm-danger">Delete</button>
+              </form>
+            </td>
+          </tr>
+        )) : <tr><td colspan="5" style="text-align:center;color:var(--text-muted);padding:40px">No job offers yet.</td></tr>}
+      </tbody>
+    </table>
+  </div>
+</AdminLayout>

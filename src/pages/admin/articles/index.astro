@@ -1,0 +1,41 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import { createSupabaseServerClient, supabase } from '../../../lib/supabase';
+const sb = createSupabaseServerClient(Astro.cookies);
+const { data: { session } } = await sb.auth.getSession();
+if (!session) return Astro.redirect('/admin/');
+if (Astro.request.method === 'POST') {
+  const form = await Astro.request.formData();
+  const id = form.get('delete_id') as string;
+  if (id) await supabase.from('articles').delete().eq('id', id);
+}
+const { data: articles } = await supabase.from('articles').select('id,title_en,published,author,created_at').order('created_at', { ascending: false });
+---
+<AdminLayout title="Articles" active="articles">
+  <div class="admin-header">
+    <h1>Articles</h1>
+    <a href="/admin/articles/new" class="btn-sm btn-sm-primary">+ New article</a>
+  </div>
+  <div class="admin-card">
+    <table class="admin-table">
+      <thead><tr><th>Title</th><th>Author</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
+      <tbody>
+        {articles?.length ? articles.map(a => (
+          <tr>
+            <td style="font-weight:600">{a.title_en || '(no title)'}</td>
+            <td>{a.author || '—'}</td>
+            <td><span class:list={['badge', a.published ? 'badge-green' : 'badge-grey']}>{a.published ? 'Published' : 'Draft'}</span></td>
+            <td>{new Date(a.created_at).toLocaleDateString('en')}</td>
+            <td style="display:flex;gap:8px">
+              <a href={`/admin/articles/${a.id}`} class="btn-sm btn-sm-outline">Edit</a>
+              <form method="POST" onsubmit="return confirm('Delete this article?')">
+                <input type="hidden" name="delete_id" value={a.id} />
+                <button type="submit" class="btn-sm btn-sm-danger">Delete</button>
+              </form>
+            </td>
+          </tr>
+        )) : <tr><td colspan="5" style="text-align:center;color:var(--text-muted);padding:40px">No articles yet.</td></tr>}
+      </tbody>
+    </table>
+  </div>
+</AdminLayout>

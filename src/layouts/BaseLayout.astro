@@ -1,0 +1,65 @@
+---
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import CookieBanner from '../components/CookieBanner.astro';
+import { useTranslations } from '../i18n/utils';
+import type { Lang } from '../i18n/utils';
+
+export interface Props { lang: Lang; title?: string; desc?: string; }
+const { lang, title, desc } = Astro.props;
+const t = useTranslations(lang);
+const site = 'https://www.it-concept.kr';
+const canonical = lang === 'fr' ? `${site}/fr/` : lang === 'ko' ? `${site}/ko/` : `${site}/`;
+---
+<!DOCTYPE html>
+<html lang={lang}>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title ?? t('meta.title')}</title>
+  <meta name="description" content={desc ?? t('meta.desc')} />
+  <link rel="canonical" href={canonical} />
+  <link rel="alternate" hreflang="en" href={`${site}/`} />
+  <link rel="alternate" hreflang="fr" href={`${site}/fr/`} />
+  <link rel="alternate" hreflang="ko" href={`${site}/ko/`} />
+  <link rel="alternate" hreflang="x-default" href={`${site}/`} />
+  <link rel="icon" type="image/png" href="/favicon-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "IT-CONCEPT",
+    "url": site,
+    "logo": `${site}/logo.png`,
+    "email": "info@it-concept.kr",
+    "telephone": "+82-2-553-7854",
+    "address": { "@type": "PostalAddress", "streetAddress": "#603 Dangsan Bldg, 147 Yeongdeungpo-ro", "addressLocality": "Seoul", "postalCode": "07266", "addressCountry": "KR" },
+    "description": "IT consulting and outsourcing in Seoul. Infrastructure, network, security, development and hosting."
+  })} />
+</head>
+<body>
+  <Nav lang={lang} />
+  <slot />
+  <Footer lang={lang} />
+  <CookieBanner lang={lang} />
+  <script>
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => { if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 80); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+    function toggleMobileNav() { document.getElementById('mobileNav')?.classList.toggle('open'); }
+    (window as any).toggleMobileNav = toggleMobileNav;
+    function dismissCookies(v: boolean) {
+      localStorage.setItem('cookie_consent', v ? 'accepted' : 'declined');
+      document.getElementById('cookie-banner')?.classList.remove('visible');
+    }
+    (window as any).dismissCookies = dismissCookies;
+    if (!localStorage.getItem('cookie_consent')) {
+      setTimeout(() => document.getElementById('cookie-banner')?.classList.add('visible'), 1500);
+    }
+  </script>
+</body>
+</html>

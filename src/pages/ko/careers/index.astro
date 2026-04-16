@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { supabase } from '../../../lib/supabase';
+import { useTranslations } from '../../../i18n/utils';
+const lang = 'ko';
+const t = useTranslations(lang);
+const { data: jobs } = await supabase
+  .from('job_offers')
+  .select('id,title_ko,title_en,contract_type,location,deadline,description_ko,description_en')
+  .eq('published', true)
+  .order('created_at', { ascending: false });
+---
+<BaseLayout lang={lang}>
+  <section id="careers">
+    <span class="section-label">{t('careers.label')}</span>
+    <h1 class="section-title">{t('careers.title')}</h1>
+    <p class="section-desc">{t('careers.desc')}</p>
+    <div class="jobs-list">
+      {jobs?.length ? jobs.map(j => (
+        <div class="job-card reveal">
+          <div class="job-header">
+            <div>
+              <h2>{j.title_ko || j.title_en}</h2>
+              <div class="job-meta">
+                <span class="job-badge">{j.contract_type}</span>
+                <span class="job-location">{j.location}</span>
+                {j.deadline && <span class="job-deadline">{t('careers.deadline')} {new Date(j.deadline).toLocaleDateString('ko')}</span>}
+              </div>
+            </div>
+            <a href={`mailto:rh@it-concept.kr?subject=${encodeURIComponent((j.title_ko || j.title_en) + ' – 지원')}`} class="btn-primary">{t('careers.apply')}</a>
+          </div>
+          {(j.description_ko || j.description_en) && <p class="job-desc">{j.description_ko || j.description_en}</p>}
+        </div>
+      )) : <p style="color:var(--text-muted)">{t('careers.empty')}</p>}
+    </div>
+  </section>
+</BaseLayout>

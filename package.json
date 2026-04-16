@@ -1,0 +1,17 @@
+{
+  "name": "itconcept-global",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "astro": "^6.0.0",
+    "@astrojs/vercel": "latest",
+    "@astrojs/sitemap": "latest",
+    "@supabase/supabase-js": "^2.49.4",
+    "@supabase/ssr": "^0.6.1"
+  }
+}

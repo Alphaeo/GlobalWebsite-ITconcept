@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { supabase } from '../../../lib/supabase';
+import { useTranslations } from '../../../i18n/utils';
+const lang = 'fr';
+const t = useTranslations(lang);
+const now = new Date().toISOString();
+const { data: events } = await supabase
+  .from('events')
+  .select('id,title_fr,title_en,event_date,location,description_fr,description_en,registration_url')
+  .eq('published', true)
+  .gte('event_date', now)
+  .order('event_date', { ascending: true });
+---
+<BaseLayout lang={lang}>
+  <section id="events">
+    <span class="section-label">{t('events.label')}</span>
+    <h1 class="section-title">{t('events.title')}</h1>
+    <p class="section-desc">{t('events.desc')}</p>
+    <div class="events-list">
+      {events?.length ? events.map(ev => (
+        <div class="event-card reveal">
+          <div class="event-date-block">
+            <span class="event-day">{new Date(ev.event_date).toLocaleDateString('fr', { day: '2-digit' })}</span>
+            <span class="event-month">{new Date(ev.event_date).toLocaleDateString('fr', { month: 'short' })}</span>
+          </div>
+          <div class="event-body">
+            <h2>{ev.title_fr || ev.title_en}</h2>
+            <p class="event-location">{ev.location}</p>
+            {(ev.description_fr || ev.description_en) && <p class="event-desc">{ev.description_fr || ev.description_en}</p>}
+            {ev.registration_url && <a href={ev.registration_url} target="_blank" rel="noopener" class="btn-primary" style="margin-top:12px">{t('events.register')}</a>}
+          </div>
+        </div>
+      )) : <p style="color:var(--text-muted)">{t('events.empty')}</p>}
+    </div>
+  </section>
+</BaseLayout>
