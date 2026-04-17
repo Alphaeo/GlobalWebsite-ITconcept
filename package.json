@@ -8,10 +8,10 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "astro": "^6.0.0",
-    "@astrojs/vercel": "latest",
     "@astrojs/sitemap": "latest",
+    "@astrojs/vercel": "latest",
+    "@supabase/ssr": "^0.6.1",
     "@supabase/supabase-js": "^2.49.4",
-    "@supabase/ssr": "^0.6.1"
+    "astro": "^6.0.0"
   }
 }

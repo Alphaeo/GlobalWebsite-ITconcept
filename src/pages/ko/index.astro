@@ -11,8 +11,16 @@ const services = [
   { key: 'svc5', icon: '<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>' },
   { key: 'svc6', icon: '<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>' },
 ];
-const clients = ['Airbus Group','Nokia','Mazars','Safran','Bureau Veritas','IATA','TotalEnergies','Hermès','BNP Paribas','Thales','LVMH','Schneider Electric','Renault','Orange','Michelin','Saint-Gobain'];
-const partners = ['Microsoft','Fortinet','F-Secure','Cisco'];
+const logos = [
+  { src: '/Airbus-Symbol.png', alt: 'Airbus' },
+  { src: '/nokia-logo-picture-16.png', alt: 'Nokia' },
+  { src: '/Safran-Logo.png', alt: 'Safran' },
+  { src: '/cma-cgm.png', alt: 'CMA CGM' },
+  { src: '/Forvis-Mazars-logo-1024x819.jpg', alt: 'Forvis Mazars' },
+  { src: '/longchamp-logo-freelogovectors.net_.png', alt: 'Longchamp' },
+  { src: '/asiance-squarelogo-1545629783042.webp', alt: 'Asiance' },
+];
+const alsoClients = ['Bureau Veritas','IATA','TotalEnergies','Hermès','BNP Paribas','Thales','LVMH','Schneider Electric','Renault','Orange','Michelin','Saint-Gobain','Microsoft','Fortinet','F-Secure','Cisco'];
 const stats = [
   { key: 'stat1', count: 14 }, { key: 'stat2', count: 20 },
   { key: 'stat3', count: 70 }, { key: 'stat4', count: 1500 },
@@ -25,12 +33,15 @@ const stats = [
     <div class="hero-grid-bg"></div>
     <div class="hero-inner">
       <div>
-        <div class="hero-tag">{t('hero.tag')}</div>
         <h1 class="hero-h1" set:html={t('hero.h1')} />
         <p class="hero-sub">{t('hero.sub')}</p>
         <div class="hero-ctas">
           <a href="#services" class="btn-primary">{t('hero.cta1')}</a>
           <a href="#contact" class="btn-outline">{t('hero.cta2')}</a>
+          <a href="/ITC_Presentation_2024.pdf" download class="btn-outline" style="display:inline-flex;align-items:center;gap:8px">
+            <svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            {t('brochure.download')}
+          </a>
         </div>
       </div>
       <div class="hero-stats">
@@ -60,18 +71,84 @@ const stats = [
     </div>
   </section>
 
-  <!-- EXPERTISE -->
+  <!-- TEAM -->
+  <section id="team">
+    <div class="team-inner">
+      <div class="team-text reveal">
+        <span class="section-label">{t('team.label')}</span>
+        <h2>{t('team.title')}</h2>
+        <p>{t('team.desc')}</p>
+        <button class="btn-outline" id="open-project" style="display:inline-flex;align-items:center;gap:8px;cursor:pointer">
+          <svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          {t('team.project.cta')}
+        </button>
+      </div>
+      <div class="team-facts reveal">
+        <div class="team-fact">
+          <div class="team-fact-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <div class="team-fact-label">{t('team.fact1')}</div>
+        </div>
+        <div class="team-fact">
+          <div class="team-fact-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+          <div class="team-fact-label">{t('team.fact2')}</div>
+        </div>
+        <div class="team-fact">
+          <div class="team-fact-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <div class="team-fact-label">{t('team.fact3')}</div>
+        </div>
+        <div class="team-fact">
+          <div class="team-fact-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+          <div class="team-fact-label">{t('team.fact4.remote')}</div>
+          <div class="team-fact-sub">{t('team.fact4.onsite')}</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECT MODAL -->
+  <div class="modal-overlay" id="project-modal">
+    <div class="modal-box">
+      <button class="modal-close" id="close-project" aria-label="닫기">✕</button>
+      <div class="modal-tag">사례 연구</div>
+      <h2 class="modal-title">지사 간 네트워크 연결 프로젝트</h2>
+      <div class="modal-section">
+        <div class="modal-section-label">배경</div>
+        <p>독일 기업이 글로벌 IT 네트워크를 현대화하려 합니다. IT-Concept은 한국 지사의 VPN 설정을 담당하며, 이는 프로젝트의 핵심입니다.</p>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-label">추가 과제</div>
+        <p>한국 내 IT 시스템 전체 감사 실시 및 보안 프로세스 개선.</p>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-label">수행 업무</div>
+        <ul class="modal-list">
+          <li>본사 요구사항 분석</li>
+          <li>한국 환경에 맞는 기술 적용</li>
+          <li>필요한 인터넷 회선 개통 관리</li>
+          <li>독일 IT팀 권고안에 따른 Cisco ASA Firewall 설정</li>
+          <li>연결 테스트</li>
+          <li>VPN 연결 관리 및 유지보수</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- THEY TRUST US -->
   <section id="expertise">
     <span class="section-label reveal">{t('expertise.label')}</span>
-    <h2 class="section-title reveal">{t('expertise.title')}</h2>
+    <h2 class="section-title reveal">{t('clients.label')}</h2>
     <p class="section-desc reveal">{t('expertise.desc')}</p>
-    <span class="section-label reveal" style="margin-top:0">{t('clients.label')}</span>
-    <div class="clients-logos reveal">
-      {clients.map(c => <span class="client-badge">{c}</span>)}
+    <div class="logo-marquee-wrap reveal">
+      <div class="logo-marquee">
+        {logos.map(l => <div class="logo-item"><img src={l.src} alt={l.alt} /></div>)}
+        {logos.map(l => <div class="logo-item"><img src={l.src} alt="" aria-hidden="true" /></div>)}
+      </div>
     </div>
-    <span class="section-label reveal">{t('partners.label')}</span>
-    <div class="partners-row reveal">
-      {partners.map(p => <span class="partner-badge">{p}</span>)}
+    <div class="clients-also reveal">
+      <div class="clients-also-intro">{t('clients.also')}</div>
+      <div class="clients-also-list">
+        {alsoClients.map(c => <span class="client-badge">{c}</span>)}
+      </div>
     </div>
   </section>
 
@@ -112,6 +189,22 @@ const stats = [
     </div>
   </section>
 
+  <!-- MAP -->
+  <section class="map-section">
+    <div class="map-wrapper">
+      <iframe
+        src="https://www.google.com/maps?q=147+Yeongdeungpo-ro,+Yeongdeungpo-gu,+Seoul,+South+Korea&output=embed"
+        allowfullscreen
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+      ></iframe>
+      <div class="map-overlay">
+        <strong>IT-CONCEPT Korea</strong>
+        <span>서울 영등포구 영등포로 147<br/>당산빌딩 603호 07266</span>
+      </div>
+    </div>
+  </section>
+
   <script>
     document.getElementById('contact-form')?.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -142,5 +235,10 @@ const stats = [
       });
     }, { threshold: 0.5 });
     document.querySelectorAll('[data-count]').forEach(el => obs.observe(el));
+    const modal = document.getElementById('project-modal')!;
+    document.getElementById('open-project')?.addEventListener('click', () => modal.classList.add('open'));
+    document.getElementById('close-project')?.addEventListener('click', () => modal.classList.remove('open'));
+    modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('open'); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') modal.classList.remove('open'); });
   </script>
 </BaseLayout>

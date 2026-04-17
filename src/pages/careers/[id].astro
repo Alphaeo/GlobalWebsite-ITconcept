@@ -1,0 +1,97 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { useTranslations } from '../../i18n/utils';
+import { supabase } from '../../lib/supabase';
+
+const lang = 'en';
+const t = useTranslations(lang);
+const { id } = Astro.params;
+
+const { data: job } = await supabase.from('job_offers').select('*').eq('id', id).eq('published', true).single();
+if (!job) return Astro.redirect('/careers/');
+
+const title = job.title_en || job.title_fr || job.title_ko || 'Job offer';
+const description = job.description_en || job.description_fr || job.description_ko || '';
+const sent = Astro.url.searchParams.get('sent') === '1';
+---
+<BaseLayout lang={lang} title={`${title} — IT-CONCEPT`}>
+  <section style="padding-top:calc(var(--nav-h) + 60px);max-width:760px;margin:0 auto">
+
+    <a href="/careers/" class="back-link">{t('apply.back')}</a>
+
+    <!-- Job details -->
+    <div class="job-detail-header">
+      <div class="job-badges" style="margin-bottom:12px">
+        <span class="job-badge">{job.contract_type}</span>
+        <span class="job-badge">{job.location}</span>
+        {job.deadline && <span class="job-badge">{t('careers.deadline')}: {new Date(job.deadline).toLocaleDateString('en', { year:'numeric', month:'long', day:'numeric' })}</span>}
+      </div>
+      <h1 style="font-family:var(--font-display);font-size:clamp(1.6rem,4vw,2.2rem);font-weight:700;color:var(--text);line-height:1.2;margin-bottom:32px">{title}</h1>
+      {description && (
+        <div class="job-description" set:html={description.replace(/\n/g, '<br/>')} />
+      )}
+    </div>
+
+    <!-- Application form -->
+    <div class="apply-form-wrap">
+      <h2 style="font-family:var(--font-display);font-size:1.3rem;font-weight:700;color:var(--text);margin-bottom:24px">{t('apply.title')}</h2>
+
+      {sent && (
+        <div style="background:#dcfce7;color:#16a34a;padding:16px 20px;border-radius:10px;margin-bottom:28px;font-weight:600">
+          ✓ {t('apply.sent')}
+        </div>
+      )}
+
+      <form
+        action="https://formsubmit.co/louis.mathis@it-concept.kr"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        <input type="hidden" name="_subject" value={`Application — ${title}`} />
+        <input type="hidden" name="_next" value={`https://www.it-concept.kr/careers/${id}/?sent=1`} />
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="hidden" name="Position" value={title} />
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>{t('apply.name')}*</label>
+            <input type="text" name="name" placeholder={t('apply.name.ph')} required />
+          </div>
+          <div class="form-group">
+            <label>{t('apply.email')}*</label>
+            <input type="email" name="email" placeholder={t('apply.email.ph')} required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>{t('apply.phone')}</label>
+          <input type="tel" name="phone" placeholder={t('apply.phone.ph')} />
+        </div>
+        <div class="form-group">
+          <label>{t('apply.motivation')}*</label>
+          <textarea name="cover_letter" rows="7" placeholder={t('apply.motivation.ph')} required></textarea>
+        </div>
+        <div class="form-group">
+          <label>{t('apply.cv')}*</label>
+          <input type="file" name="cv" accept=".pdf,.doc,.docx" required class="file-input" />
+          <span class="file-hint">{t('apply.cv.hint')}</span>
+        </div>
+        <div class="form-group">
+          <label>{t('apply.extra')}</label>
+          <input type="file" name="extra_document" accept=".pdf,.doc,.docx" class="file-input" />
+        </div>
+        <button type="submit" class="btn-primary" style="margin-top:8px">{t('apply.submit')}</button>
+      </form>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+.back-link { display:inline-flex;align-items:center;gap:6px;color:var(--text-muted);text-decoration:none;font-size:0.875rem;font-weight:600;margin-bottom:32px;transition:color 0.2s; }
+.back-link:hover { color:var(--red); }
+.job-detail-header { margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--grey2); }
+.job-description { font-size:0.95rem;color:var(--text-muted);line-height:1.8;white-space:pre-line; }
+.apply-form-wrap { background:var(--grey);border-radius:20px;padding:36px; }
+.file-input { padding:10px 14px;background:var(--white);border:1px solid var(--grey2);border-radius:8px;width:100%;font-size:0.875rem;cursor:pointer; }
+.file-input::file-selector-button { background:var(--red);color:#fff;border:none;border-radius:6px;padding:6px 14px;font-size:0.8rem;font-weight:600;cursor:pointer;margin-right:12px; }
+.file-hint { font-size:0.78rem;color:var(--text-muted);margin-top:6px;display:block; }
+</style>

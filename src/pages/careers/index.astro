@@ -29,7 +29,7 @@ const { data: jobs } = await supabase.from('job_offers').select('*').eq('publish
               </div>
               {job.deadline && <p class="job-deadline" style="margin-top:6px">{t('careers.deadline')}: {new Date(job.deadline).toLocaleDateString('en', { year: 'numeric', month: 'long', day: 'numeric' })}</p>}
             </div>
-            <a href={`mailto:rh@it-concept.kr?subject=Application — ${job.title_en}`} class="btn-primary" style="white-space:nowrap">{t('careers.apply')}</a>
+            <a href={`/careers/${job.id}/`} class="btn-primary" style="white-space:nowrap">{t('careers.apply')}</a>
           </div>
         ))}
         <div style="text-align:center;margin-top:32px">

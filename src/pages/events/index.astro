@@ -4,7 +4,7 @@ import { useTranslations } from '../../i18n/utils';
 import { supabase } from '../../lib/supabase';
 const lang = 'en';
 const t = useTranslations(lang);
-const { data: events } = await supabase.from('events').select('*').eq('published', true).gte('event_date', new Date().toISOString()).order('event_date', { ascending: true });
+const { data: events } = await supabase.from('events').select('*').eq('published', true).order('event_date', { ascending: true });
 ---
 <BaseLayout lang={lang} title="Events — IT-CONCEPT">
   <section style="padding-top: calc(var(--nav-h) + 60px)">
@@ -24,8 +24,8 @@ const { data: events } = await supabase.from('events').select('*').eq('published
           </div>
           <div class="card-body">
             <div class="card-tags"><span class="card-tag">{new Date(ev.event_date).toLocaleDateString('en', { month: 'short', day: 'numeric', year: 'numeric' })}</span></div>
-            <h2 class="card-title">{ev.title_en}</h2>
-            {ev.description_en && <p class="card-excerpt">{ev.description_en}</p>}
+            <h2 class="card-title">{ev.title_en || ev.title_fr || ev.title_ko}</h2>
+            {(ev.description_en || ev.description_fr || ev.description_ko) && <p class="card-excerpt">{ev.description_en || ev.description_fr || ev.description_ko}</p>}
             <div class="card-meta">
               <span>{t('events.location')}: {ev.location}</span>
             </div>

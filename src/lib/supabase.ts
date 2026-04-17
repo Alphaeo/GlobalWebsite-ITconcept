@@ -2,6 +2,8 @@ import { createClient } from '@supabase/supabase-js';
 import { createServerClient, parseCookieHeader } from '@supabase/ssr';
 import type { AstroCookies } from 'astro';
 
+export type AstroSSRContext = { request: Request; cookies: AstroCookies };
+
 const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
 
@@ -9,11 +11,11 @@ const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 // SSR client with cookie-based auth (for admin routes)
-export function createSupabaseServerClient(cookies: AstroCookies) {
+export function createSupabaseServerClient({ request, cookies }: AstroSSRContext) {
   return createServerClient(supabaseUrl, supabaseAnonKey, {
     cookies: {
       getAll() {
-        return parseCookieHeader(cookies.toString() ?? '');
+        return parseCookieHeader(request.headers.get('Cookie') ?? '');
       },
       setAll(cookiesToSet) {
         cookiesToSet.forEach(({ name, value, options }) => {

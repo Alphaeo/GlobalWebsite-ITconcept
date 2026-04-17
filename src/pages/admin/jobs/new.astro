@@ -1,19 +1,19 @@
 ---
 import AdminLayout from '../../../layouts/AdminLayout.astro';
-import { createSupabaseServerClient, supabase } from '../../../lib/supabase';
-const sb = createSupabaseServerClient(Astro.cookies);
+import { createSupabaseServerClient } from '../../../lib/supabase';
+const sb = createSupabaseServerClient({ request: Astro.request, cookies: Astro.cookies });
 const { data: { session } } = await sb.auth.getSession();
 if (!session) return Astro.redirect('/admin/');
 let error = '';
 if (Astro.request.method === 'POST') {
   const form = await Astro.request.formData();
-  const { error: err } = await supabase.from('job_offers').insert({
+  const { error: err } = await sb.from('job_offers').insert({
     published: form.get('published') === 'on',
     contract_type: form.get('contract_type'),
     location: form.get('location'),
     deadline: form.get('deadline') || null,
-    title_en: form.get('title_en'), title_fr: form.get('title_fr'), title_ko: form.get('title_ko'),
-    description_en: form.get('description_en'), description_fr: form.get('description_fr'), description_ko: form.get('description_ko'),
+    title_en: form.get('title_en') || null, title_fr: form.get('title_fr') || null, title_ko: form.get('title_ko') || null,
+    description_en: form.get('description_en') || null, description_fr: form.get('description_fr') || null, description_ko: form.get('description_ko') || null,
   });
   if (err) error = err.message;
   else return Astro.redirect('/admin/jobs');
@@ -42,13 +42,18 @@ if (Astro.request.method === 'POST') {
     </div>
     <div class="admin-card">
       <h3 style="font-family:var(--font-display);font-weight:700;margin-bottom:20px;font-size:1rem">🇬🇧 English</h3>
-      <div class="form-group"><label>Job Title (EN)*</label><input type="text" name="title_en" placeholder="IT Support Engineer" required /></div>
+      <div class="form-group"><label>Job Title (EN)</label><input type="text" name="title_en" placeholder="IT Support Engineer" /></div>
       <div class="form-group"><label>Description (EN)</label><textarea name="description_en" rows="6" placeholder="Role, responsibilities, requirements..."></textarea></div>
     </div>
     <div class="admin-card">
       <h3 style="font-family:var(--font-display);font-weight:700;margin-bottom:20px;font-size:1rem">🇫🇷 Français</h3>
       <div class="form-group"><label>Intitulé du poste (FR)</label><input type="text" name="title_fr" /></div>
       <div class="form-group"><label>Description (FR)</label><textarea name="description_fr" rows="6"></textarea></div>
+    </div>
+    <div class="admin-card">
+      <h3 style="font-family:var(--font-display);font-weight:700;margin-bottom:20px;font-size:1rem">🇰🇷 한국어</h3>
+      <div class="form-group"><label>직책명 (KO)</label><input type="text" name="title_ko" /></div>
+      <div class="form-group"><label>직무 설명 (KO)</label><textarea name="description_ko" rows="6"></textarea></div>
     </div>
     <div class="admin-card">
       <div class="form-group" style="flex-direction:row;align-items:center;gap:10px;margin-bottom:0">

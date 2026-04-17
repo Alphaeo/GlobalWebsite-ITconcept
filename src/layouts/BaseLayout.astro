@@ -46,6 +46,12 @@ const canonical = lang === 'fr' ? `${site}/fr/` : lang === 'ko' ? `${site}/ko/` 
   <Footer lang={lang} />
   <CookieBanner lang={lang} />
   <script>
+    // Redirect Supabase recovery tokens to the reset-password page
+    if (window.location.hash.includes('type=recovery')) {
+      window.location.href = '/admin/reset-password' + window.location.hash;
+    }
+  </script>
+  <script>
     const obs = new IntersectionObserver((entries) => {
       entries.forEach((e, i) => { if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 80); });
     }, { threshold: 0.1 });

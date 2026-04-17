@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const lang = 'fr';
+---
+<BaseLayout lang={lang}>
+  <section style="padding: 140px 5% 100px; max-width: 860px; margin: 0 auto;">
+    <h1 style="font-family:var(--font-display);font-size:2rem;font-weight:700;margin-bottom:40px">Politique de cookies</h1>
+
+    <h2 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;margin:32px 0 12px">Qu'est-ce qu'un cookie ?</h2>
+    <p style="line-height:1.8;color:var(--text-muted)">
+      Un cookie est un petit fichier texte déposé sur votre navigateur lors de la visite d'un site. Il permet de mémoriser certaines informations pour améliorer votre expérience de navigation.
+    </p>
+
+    <h2 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;margin:32px 0 12px">Cookies utilisés sur ce site</h2>
+    <p style="line-height:1.8;color:var(--text-muted)">Ce site utilise uniquement des cookies fonctionnels essentiels :</p>
+    <table style="width:100%;border-collapse:collapse;margin-top:16px;font-size:0.9rem">
+      <thead>
+        <tr style="border-bottom:2px solid var(--grey2)">
+          <th style="text-align:left;padding:10px 8px;color:var(--text)">Nom</th>
+          <th style="text-align:left;padding:10px 8px;color:var(--text)">Finalité</th>
+          <th style="text-align:left;padding:10px 8px;color:var(--text)">Durée</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid var(--grey2)">
+          <td style="padding:10px 8px;color:var(--text-muted)"><code>cookie_consent</code></td>
+          <td style="padding:10px 8px;color:var(--text-muted)">Mémorise votre choix de consentement aux cookies</td>
+          <td style="padding:10px 8px;color:var(--text-muted)">Persistant (localStorage)</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--grey2)">
+          <td style="padding:10px 8px;color:var(--text-muted)"><code>sb-*</code></td>
+          <td style="padding:10px 8px;color:var(--text-muted)">Session d'authentification (espace admin uniquement)</td>
+          <td style="padding:10px 8px;color:var(--text-muted)">Session</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;margin:32px 0 12px">Cookies tiers</h2>
+    <p style="line-height:1.8;color:var(--text-muted)">
+      Ce site ne dépose aucun cookie de suivi, de publicité ou d'analyse tiers. Si vous utilisez le lien de réservation Calendly, celui-ci peut déposer ses propres cookies selon sa <a href="https://calendly.com/privacy" target="_blank" rel="noopener" style="color:var(--red)">politique de confidentialité</a>.
+    </p>
+
+    <h2 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;margin:32px 0 12px">Gérer vos préférences</h2>
+    <p style="line-height:1.8;color:var(--text-muted)">
+      Vous pouvez accepter ou refuser les cookies lors de votre première visite via la bannière affichée en bas de page. Vous pouvez également supprimer les cookies à tout moment via les paramètres de votre navigateur.
+    </p>
+
+    <h2 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;margin:32px 0 12px">Contact</h2>
+    <p style="line-height:1.8;color:var(--text-muted)">
+      Pour toute question relative à notre utilisation des cookies : <a href="mailto:info@it-concept.kr" style="color:var(--red)">info@it-concept.kr</a>
+    </p>
+
+    <p style="margin-top:48px;font-size:0.85rem;color:var(--text-muted)">Dernière mise à jour : avril 2026</p>
+    <a href="/" style="display:inline-block;margin-top:32px;color:var(--red);text-decoration:none;font-weight:600">← Retour au site</a>
+  </section>
+</BaseLayout>

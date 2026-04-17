@@ -27,7 +27,7 @@ const { data: jobs } = await supabase
                 {j.deadline && <span class="job-deadline">{t('careers.deadline')} {new Date(j.deadline).toLocaleDateString('fr')}</span>}
               </div>
             </div>
-            <a href={`mailto:rh@it-concept.kr?subject=${encodeURIComponent((j.title_fr || j.title_en) + ' – Candidature')}`} class="btn-primary">{t('careers.apply')}</a>
+            <a href={`/fr/careers/${j.id}/`} class="btn-primary">{t('careers.apply')}</a>
           </div>
           {(j.description_fr || j.description_en) && <p class="job-desc">{j.description_fr || j.description_en}</p>}
         </div>

@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const lang = 'fr';
+---
+<BaseLayout lang={lang}>
+  <section style="padding: 140px 5% 100px; max-width: 860px; margin: 0 auto;">
+    <h1 style="font-family:var(--font-display);font-size:2rem;font-weight:700;margin-bottom:40px">Mentions légales</h1>
+
+    <h2 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;margin:32px 0 12px">Éditeur du site</h2>
+    <p style="line-height:1.8;color:var(--text-muted)">
+      <strong>IT-CONCEPT Korea</strong><br />
+      #603 Dangsan Bldg, 147 Yeongdeungpo-ro<br />
+      Yeongdeungpo-gu, Seoul 07266 — République de Corée<br />
+      Email : <a href="mailto:info@it-concept.kr" style="color:var(--red)">info@it-concept.kr</a><br />
+      Téléphone : +82 2-553-7854
+    </p>
+
+    <h2 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;margin:32px 0 12px">Hébergement</h2>
+    <p style="line-height:1.8;color:var(--text-muted)">
+      Ce site est hébergé par <strong>Vercel Inc.</strong><br />
+      340 Pine Street, Suite 701, San Francisco, CA 94104 — États-Unis
+    </p>
+
+    <h2 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;margin:32px 0 12px">Propriété intellectuelle</h2>
+    <p style="line-height:1.8;color:var(--text-muted)">
+      L'ensemble des contenus présents sur ce site (textes, images, logos) est la propriété exclusive d'IT-CONCEPT Korea, sauf mention contraire. Toute reproduction, distribution ou utilisation sans autorisation écrite préalable est strictement interdite.
+    </p>
+
+    <h2 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;margin:32px 0 12px">Données personnelles</h2>
+    <p style="line-height:1.8;color:var(--text-muted)">
+      Les données collectées via le formulaire de contact (nom, email, message) sont utilisées uniquement pour répondre à vos demandes. Elles ne sont ni vendues, ni transmises à des tiers. Conformément au RGPD, vous disposez d'un droit d'accès, de rectification et de suppression de vos données en contactant <a href="mailto:info@it-concept.kr" style="color:var(--red)">info@it-concept.kr</a>.
+    </p>
+
+    <h2 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;margin:32px 0 12px">Liens externes</h2>
+    <p style="line-height:1.8;color:var(--text-muted)">
+      IT-CONCEPT Korea ne peut être tenu responsable du contenu des sites externes vers lesquels ce site renvoie.
+    </p>
+
+    <p style="margin-top:48px;font-size:0.85rem;color:var(--text-muted)">Dernière mise à jour : avril 2026</p>
+    <a href="/" style="display:inline-block;margin-top:32px;color:var(--red);text-decoration:none;font-weight:600">← Retour au site</a>
+  </section>
+</BaseLayout>

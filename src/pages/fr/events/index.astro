@@ -4,12 +4,10 @@ import { supabase } from '../../../lib/supabase';
 import { useTranslations } from '../../../i18n/utils';
 const lang = 'fr';
 const t = useTranslations(lang);
-const now = new Date().toISOString();
 const { data: events } = await supabase
   .from('events')
-  .select('id,title_fr,title_en,event_date,location,description_fr,description_en,registration_url')
+  .select('id,title_fr,title_en,title_ko,event_date,location,description_fr,description_en,description_ko,registration_url')
   .eq('published', true)
-  .gte('event_date', now)
   .order('event_date', { ascending: true });
 ---
 <BaseLayout lang={lang}>
@@ -25,9 +23,9 @@ const { data: events } = await supabase
             <span class="event-month">{new Date(ev.event_date).toLocaleDateString('fr', { month: 'short' })}</span>
           </div>
           <div class="event-body">
-            <h2>{ev.title_fr || ev.title_en}</h2>
+            <h2>{ev.title_fr || ev.title_en || ev.title_ko}</h2>
             <p class="event-location">{ev.location}</p>
-            {(ev.description_fr || ev.description_en) && <p class="event-desc">{ev.description_fr || ev.description_en}</p>}
+            {(ev.description_fr || ev.description_en || ev.description_ko) && <p class="event-desc">{ev.description_fr || ev.description_en || ev.description_ko}</p>}
             {ev.registration_url && <a href={ev.registration_url} target="_blank" rel="noopener" class="btn-primary" style="margin-top:12px">{t('events.register')}</a>}
           </div>
         </div>

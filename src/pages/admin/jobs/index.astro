@@ -1,15 +1,15 @@
 ---
 import AdminLayout from '../../../layouts/AdminLayout.astro';
-import { createSupabaseServerClient, supabase } from '../../../lib/supabase';
-const sb = createSupabaseServerClient(Astro.cookies);
+import { createSupabaseServerClient } from '../../../lib/supabase';
+const sb = createSupabaseServerClient({ request: Astro.request, cookies: Astro.cookies });
 const { data: { session } } = await sb.auth.getSession();
 if (!session) return Astro.redirect('/admin/');
 if (Astro.request.method === 'POST') {
   const form = await Astro.request.formData();
   const id = form.get('delete_id') as string;
-  if (id) await supabase.from('job_offers').delete().eq('id', id);
+  if (id) await sb.from('job_offers').delete().eq('id', id);
 }
-const { data: jobs } = await supabase.from('job_offers').select('id,title_en,contract_type,location,deadline,published,created_at').order('created_at', { ascending: false });
+const { data: jobs } = await sb.from('job_offers').select('id,title_en,contract_type,location,deadline,published,created_at').order('created_at', { ascending: false });
 ---
 <AdminLayout title="Job Offers" active="jobs">
   <div class="admin-header">

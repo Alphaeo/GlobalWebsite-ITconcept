@@ -1,15 +1,15 @@
 ---
 import AdminLayout from '../../layouts/AdminLayout.astro';
-import { createSupabaseServerClient, supabase } from '../../lib/supabase';
-const sb = createSupabaseServerClient(Astro.cookies);
+import { createSupabaseServerClient } from '../../lib/supabase';
+const sb = createSupabaseServerClient({ request: Astro.request, cookies: Astro.cookies });
 const { data: { session } } = await sb.auth.getSession();
 if (!session) return Astro.redirect('/admin/');
 const [{ count: articles }, { count: events }, { count: jobs }] = await Promise.all([
-  supabase.from('articles').select('*', { count: 'exact', head: true }),
-  supabase.from('events').select('*', { count: 'exact', head: true }),
-  supabase.from('job_offers').select('*', { count: 'exact', head: true }),
+  sb.from('articles').select('*', { count: 'exact', head: true }),
+  sb.from('events').select('*', { count: 'exact', head: true }),
+  sb.from('job_offers').select('*', { count: 'exact', head: true }),
 ]);
-const { data: recentArticles } = await supabase.from('articles').select('id,title_en,published,created_at').order('created_at', { ascending: false }).limit(5);
+const { data: recentArticles } = await sb.from('articles').select('id,title_en,published,created_at').order('created_at', { ascending: false }).limit(5);
 ---
 <AdminLayout title="Dashboard" active="dashboard">
   <div class="admin-header">
