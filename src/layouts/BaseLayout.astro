@@ -6,11 +6,17 @@ import CookieBanner from '../components/CookieBanner.astro';
 import { useTranslations } from '../i18n/utils';
 import type { Lang } from '../i18n/utils';
 
-export interface Props { lang: Lang; title?: string; desc?: string; }
-const { lang, title, desc } = Astro.props;
+export interface Props { lang: Lang; title?: string; desc?: string; canonical?: string; }
+const { lang, title, desc, canonical: canonicalProp } = Astro.props;
 const t = useTranslations(lang);
 const site = 'https://www.it-concept.kr';
-const canonical = lang === 'fr' ? `${site}/fr/` : lang === 'ko' ? `${site}/ko/` : `${site}/`;
+const canonical = canonicalProp ?? (lang === 'fr' ? `${site}/fr/` : lang === 'ko' ? `${site}/ko/` : `${site}/`);
+const ogLocale = lang === 'fr' ? 'fr_FR' : lang === 'ko' ? 'ko_KR' : 'en_US';
+const orgDesc = lang === 'fr'
+  ? "IT consulting et outsourcing à Séoul — Infrastructure, réseau, sécurité, développement et hébergement."
+  : lang === 'ko'
+  ? "서울 IT 컨설팅 및 아웃소싱 — 인프라, 네트워크, 보안, 개발, 호스팅."
+  : "IT consulting and outsourcing in Seoul. Infrastructure, network, security, development and hosting.";
 ---
 <!DOCTYPE html>
 <html lang={lang}>
@@ -25,6 +31,19 @@ const canonical = lang === 'fr' ? `${site}/fr/` : lang === 'ko' ? `${site}/ko/` 
   <link rel="alternate" hreflang="ko" href={`${site}/ko/`} />
   <link rel="alternate" hreflang="x-default" href={`${site}/`} />
   <link rel="icon" type="image/png" href="/favicon-icon.png" />
+  <link rel="apple-touch-icon" href="/favicon-icon.png" />
+  <meta name="theme-color" content="#E53935" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:title" content={title ?? t('meta.title')} />
+  <meta property="og:description" content={desc ?? t('meta.desc')} />
+  <meta property="og:image" content={`${site}/logo.png`} />
+  <meta property="og:site_name" content="IT-CONCEPT" />
+  <meta property="og:locale" content={ogLocale} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title ?? t('meta.title')} />
+  <meta name="twitter:description" content={desc ?? t('meta.desc')} />
+  <meta name="twitter:image" content={`${site}/logo.png`} />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -37,7 +56,7 @@ const canonical = lang === 'fr' ? `${site}/fr/` : lang === 'ko' ? `${site}/ko/` 
     "email": "info@it-concept.kr",
     "telephone": "+82-2-553-7854",
     "address": { "@type": "PostalAddress", "streetAddress": "#603 Dangsan Bldg, 147 Yeongdeungpo-ro", "addressLocality": "Seoul", "postalCode": "07266", "addressCountry": "KR" },
-    "description": "IT consulting and outsourcing in Seoul. Infrastructure, network, security, development and hosting."
+    "description": orgDesc
   })} />
 </head>
 <body>

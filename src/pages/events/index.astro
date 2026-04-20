@@ -5,8 +5,27 @@ import { supabase } from '../../lib/supabase';
 const lang = 'en';
 const t = useTranslations(lang);
 const { data: events } = await supabase.from('events').select('*').eq('published', true).order('event_date', { ascending: true });
+const canonical = 'https://www.it-concept.kr/events/';
+const eventsSchema = events?.length ? {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "itemListElement": events.map((ev, i) => ({
+    "@type": "ListItem",
+    "position": i + 1,
+    "item": {
+      "@type": "Event",
+      "name": ev.title_en || ev.title_fr || ev.title_ko,
+      "startDate": ev.event_date,
+      "location": { "@type": "Place", "name": ev.location || "Seoul" },
+      "description": ev.description_en || ev.description_fr || ev.description_ko || "",
+      "organizer": { "@type": "Organization", "name": "IT-CONCEPT", "url": "https://www.it-concept.kr" },
+      ...(ev.registration_url ? { "url": ev.registration_url } : {})
+    }
+  }))
+} : null;
 ---
-<BaseLayout lang={lang} title="Events — IT-CONCEPT">
+<BaseLayout lang={lang} title="Events — IT-CONCEPT" canonical={canonical}>
+  {eventsSchema && <script type="application/ld+json" set:html={JSON.stringify(eventsSchema)} />}
   <section style="padding-top: calc(var(--nav-h) + 60px)">
     <span class="section-label reveal">{t('events.label')}</span>
     <h1 class="section-title reveal">{t('events.title')}</h1>

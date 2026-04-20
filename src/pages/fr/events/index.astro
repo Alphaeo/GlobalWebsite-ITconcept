@@ -9,8 +9,27 @@ const { data: events } = await supabase
   .select('id,title_fr,title_en,title_ko,event_date,location,description_fr,description_en,description_ko,registration_url')
   .eq('published', true)
   .order('event_date', { ascending: true });
+const canonical = 'https://www.it-concept.kr/fr/events/';
+const eventsSchema = events?.length ? {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "itemListElement": events.map((ev, i) => ({
+    "@type": "ListItem",
+    "position": i + 1,
+    "item": {
+      "@type": "Event",
+      "name": ev.title_fr || ev.title_en || ev.title_ko,
+      "startDate": ev.event_date,
+      "location": { "@type": "Place", "name": ev.location || "Séoul" },
+      "description": ev.description_fr || ev.description_en || ev.description_ko || "",
+      "organizer": { "@type": "Organization", "name": "IT-CONCEPT", "url": "https://www.it-concept.kr" },
+      ...(ev.registration_url ? { "url": ev.registration_url } : {})
+    }
+  }))
+} : null;
 ---
-<BaseLayout lang={lang}>
+<BaseLayout lang={lang} canonical={canonical}>
+  {eventsSchema && <script type="application/ld+json" set:html={JSON.stringify(eventsSchema)} />}
   <section id="events">
     <span class="section-label">{t('events.label')}</span>
     <h1 class="section-title">{t('events.title')}</h1>

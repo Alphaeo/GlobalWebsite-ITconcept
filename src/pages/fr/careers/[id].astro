@@ -13,8 +13,33 @@ if (!job) return Astro.redirect('/fr/careers/');
 const title = job.title_fr || job.title_en || job.title_ko || 'Offre d\'emploi';
 const description = job.description_fr || job.description_en || job.description_ko || '';
 const sent = Astro.url.searchParams.get('sent') === '1';
+const canonical = `https://www.it-concept.kr/fr/careers/${id}/`;
+const jobSchema = {
+  "@context": "https://schema.org",
+  "@type": "JobPosting",
+  "title": title,
+  "description": description || title,
+  "datePosted": job.created_at?.split('T')[0] ?? new Date().toISOString().split('T')[0],
+  ...(job.deadline ? { "validThrough": job.deadline } : {}),
+  "employmentType": job.contract_type ?? "FULL_TIME",
+  "hiringOrganization": {
+    "@type": "Organization",
+    "name": "IT-CONCEPT",
+    "sameAs": "https://www.it-concept.kr",
+    "logo": "https://www.it-concept.kr/logo.png"
+  },
+  "jobLocation": {
+    "@type": "Place",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": job.location || "Seoul",
+      "addressCountry": "KR"
+    }
+  }
+};
 ---
-<BaseLayout lang={lang} title={`${title} — IT-CONCEPT`}>
+<BaseLayout lang={lang} title={`${title} — IT-CONCEPT`} canonical={canonical}>
+  <script type="application/ld+json" set:html={JSON.stringify(jobSchema)} />
   <section style="padding-top:calc(var(--nav-h) + 60px);max-width:760px;margin:0 auto">
 
     <a href="/fr/careers/" class="back-link">{t('apply.back')}</a>
