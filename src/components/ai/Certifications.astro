@@ -1,0 +1,66 @@
+---
+import { useAITranslations } from '../../i18n/utils';
+export interface Props { lang: 'en' | 'fr' | 'ko'; }
+const { lang } = Astro.props;
+const t = useAITranslations(lang);
+---
+<section id="certifications">
+  <span class="section-label reveal">{t('cert.label')}</span>
+  <h2 class="section-title reveal">{t('cert.title')}</h2>
+  <div class="cert-strip reveal">
+
+    <div class="cert-ms-partner">
+      <svg width="24" height="24" viewBox="0 0 23 23" fill="none"><rect width="11" height="11" fill="#F25022"/><rect x="12" width="11" height="11" fill="#7FBA00"/><rect y="12" width="11" height="11" fill="#00A4EF"/><rect x="12" y="12" width="11" height="11" fill="#FFB900"/></svg>
+      Microsoft Partner
+    </div>
+
+    <div class="cert-badge">
+      <div class="cert-badge-icon">
+        <svg viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="8" fill="#0078D4"/><path d="M12 20C12 15.58 15.58 12 20 12C24.42 12 28 15.58 28 20C28 24.42 24.42 28 20 28C15.58 28 12 24.42 12 20Z" stroke="white" stroke-width="2"/><path d="M20 16V20L23 23" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+      </div>
+      <div class="cert-badge-name">Azure AI Engineer</div>
+      <div class="cert-badge-sub">Associate</div>
+    </div>
+
+    <div class="cert-badge">
+      <div class="cert-badge-icon">
+        <svg viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="8" fill="#0078D4"/><path d="M10 28L16 16L20 24L24 18L30 28H10Z" fill="white" fill-opacity="0.9"/></svg>
+      </div>
+      <div class="cert-badge-name">Azure Data Engineer</div>
+      <div class="cert-badge-sub">Associate</div>
+    </div>
+
+    <div class="cert-badge">
+      <div class="cert-badge-icon">
+        <svg viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="8" fill="#742774"/><circle cx="20" cy="20" r="8" stroke="white" stroke-width="2"/><path d="M20 14V20L24 22" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+      </div>
+      <div class="cert-badge-name">Power Platform</div>
+      <div class="cert-badge-sub">Fundamentals</div>
+    </div>
+
+    <div class="cert-badge">
+      <div class="cert-badge-icon">
+        <svg viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="8" fill="#0078D4"/><rect x="10" y="12" width="20" height="3" rx="1.5" fill="white"/><rect x="10" y="18" width="14" height="3" rx="1.5" fill="white"/><rect x="10" y="24" width="17" height="3" rx="1.5" fill="white"/></svg>
+      </div>
+      <div class="cert-badge-name">Microsoft 365</div>
+      <div class="cert-badge-sub">Fundamentals</div>
+    </div>
+
+    <div class="cert-badge">
+      <div class="cert-badge-icon">
+        <svg viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="8" fill="#00A4EF"/><path d="M14 20C14 16.69 16.69 14 20 14C23.31 14 26 16.69 26 20C26 23.31 23.31 26 20 26C16.69 26 14 23.31 14 20Z" stroke="white" stroke-width="2"/><circle cx="20" cy="20" r="3" fill="white"/></svg>
+      </div>
+      <div class="cert-badge-name">Azure Fundamentals</div>
+      <div class="cert-badge-sub">AZ-900</div>
+    </div>
+
+    <div class="cert-badge">
+      <div class="cert-badge-icon">
+        <svg viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="8" fill="#FFB900"/><path d="M20 11L23.09 17.26L30 18.27L25 23.14L26.18 30.02L20 26.77L13.82 30.02L15 23.14L10 18.27L16.91 17.26L20 11Z" fill="white"/></svg>
+      </div>
+      <div class="cert-badge-name">AI-900</div>
+      <div class="cert-badge-sub">Azure AI Fundamentals</div>
+    </div>
+
+  </div>
+</section>

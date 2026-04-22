@@ -1,0 +1,53 @@
+---
+import { useAITranslations } from '../../i18n/utils';
+export interface Props { lang: 'en' | 'fr' | 'ko'; }
+const { lang } = Astro.props;
+const t = useAITranslations(lang);
+---
+<section id="testimonials">
+  <span class="section-label reveal" style="color:var(--red-light)">{t('testi.label')}</span>
+  <h2 class="section-title reveal">{t('testi.title')}</h2>
+  <p class="section-desc reveal">{t('testi.desc')}</p>
+  <div class="testi-grid">
+
+    <div class="testi-card reveal">
+      <span class="testi-badge">{t('testi.soon')}</span>
+      <div class="testi-quote">"</div>
+      <div class="testi-text placeholder">{t('testi.placeholder')}</div>
+      <div class="testi-author">
+        <div class="testi-avatar">—</div>
+        <div>
+          <div class="testi-name">{t('testi.anon.name')}</div>
+          <div class="testi-role">{t('testi.anon.role')}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testi-card reveal">
+      <span class="testi-badge">{t('testi.soon')}</span>
+      <div class="testi-quote">"</div>
+      <div class="testi-text placeholder">{t('testi.placeholder')}</div>
+      <div class="testi-author">
+        <div class="testi-avatar">—</div>
+        <div>
+          <div class="testi-name">{t('testi.anon2.name')}</div>
+          <div class="testi-role">{t('testi.anon2.role')}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testi-card reveal">
+      <span class="testi-badge">{t('testi.soon')}</span>
+      <div class="testi-quote">"</div>
+      <div class="testi-text placeholder">{t('testi.placeholder')}</div>
+      <div class="testi-author">
+        <div class="testi-avatar">—</div>
+        <div>
+          <div class="testi-name">{t('testi.anon3.name')}</div>
+          <div class="testi-role">{t('testi.anon3.role')}</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>

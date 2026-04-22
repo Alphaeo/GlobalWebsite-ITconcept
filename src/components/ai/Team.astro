@@ -1,0 +1,28 @@
+---
+import { useAITranslations } from '../../i18n/utils';
+export interface Props { lang: 'en' | 'fr' | 'ko'; }
+const { lang } = Astro.props;
+const t = useAITranslations(lang);
+---
+<section id="team">
+  <span class="section-label reveal">{t('team.label')}</span>
+  <h2 class="section-title reveal">{t('team.title')}</h2>
+  <p class="section-desc reveal">{t('team.desc')}</p>
+  <div class="team-grid">
+
+    <div class="team-card reveal">
+      <div class="team-avatar">SC</div>
+      <div class="team-name">Solène CATELLA</div>
+      <div class="team-role">{t('team1.role')}</div>
+      <div class="team-desc">{t('team1.desc')}</div>
+    </div>
+
+    <div class="team-card reveal">
+      <div class="team-avatar">LM</div>
+      <div class="team-name">Louis MATHIS</div>
+      <div class="team-role">{t('team2.role')}</div>
+      <div class="team-desc">{t('team2.desc')}</div>
+    </div>
+
+  </div>
+</section>

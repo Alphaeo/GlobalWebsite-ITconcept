@@ -1,0 +1,91 @@
+---
+import { useAITranslations } from '../../i18n/utils';
+export interface Props { lang: 'en' | 'fr' | 'ko'; }
+const { lang } = Astro.props;
+const t = useAITranslations(lang);
+
+const profileRows = [
+  { key: 'bestfor', icon: '🎯' },
+  { key: 'stage',   icon: '📍' },
+  { key: 'engagement', icon: '⏱' },
+  { key: 'audience', icon: '👥' },
+];
+---
+<section id="compare">
+  <span class="section-label reveal">{t('cmp.label')}</span>
+  <h2 class="section-title reveal">{t('cmp.title')}</h2>
+  <p class="section-desc reveal">{t('cmp.desc')}</p>
+  <div class="reveal" style="overflow-x:auto;margin-top:40px">
+    <table class="cmp-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>
+            <span class="cmp-svc-num">1</span>
+            {t('svc1.title')}
+          </th>
+          <th>
+            <span class="cmp-svc-num">2</span>
+            {t('svc2.title')}
+          </th>
+          <th>
+            <span class="cmp-svc-num">3</span>
+            {t('svc3.title')}
+          </th>
+          <th>
+            <span class="cmp-svc-num">4</span>
+            {t('svc4.title')}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {profileRows.map(({ key, icon }) => (
+          <tr class="cmp-profile-row">
+            <td><div class="cmp-row-label"><span class="cmp-row-icon">{icon}</span>{t(`cmp.${key}`)}</div></td>
+            <td>{t(`cmp.svc1.${key}`)}</td>
+            <td>{t(`cmp.svc2.${key}`)}</td>
+            <td>{t(`cmp.svc3.${key}`)}</td>
+            <td>{t(`cmp.svc4.${key}`)}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<style>
+.cmp-svc-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--red);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  margin-right: 6px;
+  flex-shrink: 0;
+}
+
+.cmp-profile-row td {
+  font-size: 0.85rem;
+  color: var(--text);
+  vertical-align: top;
+  line-height: 1.45;
+}
+
+.cmp-row-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.cmp-row-icon {
+  font-style: normal;
+  flex-shrink: 0;
+}
+</style>

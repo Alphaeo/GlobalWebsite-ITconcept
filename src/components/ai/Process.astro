@@ -1,0 +1,49 @@
+---
+import { useAITranslations } from '../../i18n/utils';
+export interface Props { lang: 'en' | 'fr' | 'ko'; }
+const { lang } = Astro.props;
+const t = useAITranslations(lang);
+---
+<section id="process">
+  <span class="section-label reveal">{t('proc.label')}</span>
+  <h2 class="section-title reveal">{t('proc.title')}</h2>
+  <p class="section-desc reveal">{t('proc.desc')}</p>
+  <div class="packages-grid">
+    <div class="pkg-card reveal">
+      <span class="pkg-duration">Étape 1</span>
+      <h3 class="pkg-title">{t('proc1.title')}</h3>
+      <p class="pkg-desc">{t('proc1.desc')}</p>
+      <ul class="pkg-list">
+        <li>{t('proc1.p1')}</li>
+        <li>{t('proc1.p2')}</li>
+        <li>{t('proc1.p3')}</li>
+        <li>{t('proc1.p4')}</li>
+      </ul>
+    </div>
+    <div class="pkg-card featured reveal">
+      <span class="pkg-duration">Étape 2</span>
+      <h3 class="pkg-title">{t('proc2.title')}</h3>
+      <p class="pkg-desc">{t('proc2.desc')}</p>
+      <ul class="pkg-list">
+        <li>{t('proc2.p1')}</li>
+        <li>{t('proc2.p2')}</li>
+        <li>{t('proc2.p3')}</li>
+        <li>{t('proc2.p4')}</li>
+      </ul>
+    </div>
+    <div class="pkg-card reveal">
+      <span class="pkg-duration">Étape 3</span>
+      <h3 class="pkg-title">{t('proc3.title')}</h3>
+      <p class="pkg-desc">{t('proc3.desc')}</p>
+      <ul class="pkg-list">
+        <li>{t('proc3.p1')}</li>
+        <li>{t('proc3.p2')}</li>
+        <li>{t('proc3.p3')}</li>
+        <li>{t('proc3.p4')}</li>
+      </ul>
+    </div>
+  </div>
+  <div class="reveal" style="text-align:center;margin-top:48px">
+    <a href="#contact" class="btn-primary">{t('proc.cta')}</a>
+  </div>
+</section>

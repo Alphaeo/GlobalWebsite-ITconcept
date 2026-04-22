@@ -1,0 +1,70 @@
+---
+import { useAITranslations } from '../../i18n/utils';
+export interface Props { lang: 'en' | 'fr' | 'ko'; }
+const { lang } = Astro.props;
+const t = useAITranslations(lang);
+---
+<section id="stack">
+  <span class="section-label reveal">{t('stack.label')}</span>
+  <h2 class="section-title reveal">{t('stack.title')}</h2>
+  <p class="section-desc reveal">{t('stack.desc')}</p>
+  <div class="stack-groups reveal">
+    <div>
+      <div class="stack-group-title">{t('stack.ms')}</div>
+      <div class="tech-tags">
+        <span class="tech-tag">Microsoft 365 / Teams</span>
+        <span class="tech-tag">Copilot Studio</span>
+        <span class="tech-tag">Azure AI Foundry</span>
+        <span class="tech-tag">Azure OpenAI Service</span>
+        <span class="tech-tag">Microsoft Graph</span>
+        <span class="tech-tag">Microsoft Entra ID</span>
+        <span class="tech-tag">Microsoft Purview</span>
+        <span class="tech-tag">Power Platform</span>
+      </div>
+    </div>
+    <div>
+      <div class="stack-group-title">{t('stack.ai')}</div>
+      <div class="tech-tags">
+        <span class="tech-tag">LangChain / LlamaIndex</span>
+        <span class="tech-tag">RAG Pipelines</span>
+        <span class="tech-tag">Vector Databases (Pinecone, pgvector)</span>
+        <span class="tech-tag">OpenAI / Anthropic / Gemini</span>
+        <span class="tech-tag">Azure AI Document Intelligence</span>
+        <span class="tech-tag">Observabilité &amp; monitoring IA</span>
+      </div>
+    </div>
+    <div>
+      <div class="stack-group-title">{t('stack.agents')}</div>
+      <div class="tech-tags">
+        <span class="tech-tag">Copilot Studio</span>
+        <span class="tech-tag">Azure AI Foundry</span>
+        <span class="tech-tag">LangChain / LlamaIndex</span>
+        <span class="tech-tag">RAG / Vector Databases</span>
+        <span class="tech-tag">Microsoft Graph / Connectors</span>
+        <span class="tech-tag">Semantic Kernel</span>
+      </div>
+    </div>
+    <div>
+      <div class="stack-group-title">{t('stack.automation')}</div>
+      <div class="tech-tags">
+        <span class="tech-tag">Power Automate / Logic Apps</span>
+        <span class="tech-tag">Make (Integromat)</span>
+        <span class="tech-tag">n8n</span>
+        <span class="tech-tag">UiPath</span>
+        <span class="tech-tag">Power Automate Desktop (RPA)</span>
+        <span class="tech-tag">Kafka / Azure Event Hubs</span>
+      </div>
+    </div>
+    <div>
+      <div class="stack-group-title">{t('stack.data')}</div>
+      <div class="tech-tags">
+        <span class="tech-tag">Microsoft Fabric</span>
+        <span class="tech-tag">Azure Data Factory</span>
+        <span class="tech-tag">Azure Synapse Analytics</span>
+        <span class="tech-tag">Databricks</span>
+        <span class="tech-tag">Power BI</span>
+        <span class="tech-tag">Tableau / Looker</span>
+      </div>
+    </div>
+  </div>
+</section>

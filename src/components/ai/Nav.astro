@@ -1,0 +1,71 @@
+---
+import { useAITranslations } from '../../i18n/utils';
+import type { Lang } from '../../i18n/utils';
+export interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const t = useAITranslations(lang);
+const base = lang === 'fr' ? '/fr/ai/' : lang === 'ko' ? '/ko/ai/' : '/ai/';
+---
+<nav id="navbar">
+  <div style="display:flex;align-items:center;gap:20px">
+    <a href={lang === 'fr' ? '/fr/' : lang === 'ko' ? '/ko/' : '/'} class="nav-back-link" title="Back to main site">
+      <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round"><polyline points="15 18 9 12 15 6"/></svg>
+      IT-CONCEPT
+    </a>
+    <a href={base} class="nav-logo">
+      <img src="/logo.png" alt="IT-CONCEPT AI" class="logo-img" />
+    </a>
+  </div>
+  <ul class="nav-links">
+    <li><a href={`${base}#services`}>{t('nav.services')}</a></li>
+    <li><a href={`${base}#process`}>{t('nav.process')}</a></li>
+    <li><a href={`${base}#packages`}>{t('nav.delivery')}</a></li>
+    <li><a href={`${base}#faq`}>{t('nav.faq')}</a></li>
+    <li><a href={`${base}#team`}>{t('nav.team')}</a></li>
+    <li><a href={`${base}#company`}>{t('nav.company')}</a></li>
+    <li><a href={`${base}#contact`}>{t('nav.contact')}</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <a href="https://calendly.com/it-concept-ai" target="_blank" rel="noopener" class="nav-cta">
+      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      {t('nav.booking')}
+    </a>
+    <div class="lang-switcher">
+      <a href="/ai/" class:list={['lang-btn', { active: lang === 'en' }]}>EN</a>
+      <a href="/fr/ai/" class:list={['lang-btn', { active: lang === 'fr' }]}>FR</a>
+      <a href="/ko/ai/" class:list={['lang-btn', { active: lang === 'ko' }]}>KO</a>
+    </div>
+    <button class="nav-hamburger" onclick="toggleMobileNav()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-nav" id="mobileNav">
+  <a href={lang === 'fr' ? '/fr/' : lang === 'ko' ? '/ko/' : '/'} onclick="toggleMobileNav()" style="opacity:0.5;font-size:0.875rem">← IT-CONCEPT</a>
+  <a href={`${base}#services`} onclick="toggleMobileNav()">{t('nav.services')}</a>
+  <a href={`${base}#process`} onclick="toggleMobileNav()">{t('nav.process')}</a>
+  <a href={`${base}#packages`} onclick="toggleMobileNav()">{t('nav.delivery')}</a>
+  <a href={`${base}#faq`} onclick="toggleMobileNav()">{t('nav.faq')}</a>
+  <a href={`${base}#team`} onclick="toggleMobileNav()">{t('nav.team')}</a>
+  <a href={`${base}#company`} onclick="toggleMobileNav()">{t('nav.company')}</a>
+  <a href={`${base}#contact`} onclick="toggleMobileNav()">{t('nav.contact')}</a>
+  <div class="mobile-lang">
+    <a href="/ai/" class:list={['lang-btn', { active: lang === 'en' }]}>EN</a>
+    <a href="/fr/ai/" class:list={['lang-btn', { active: lang === 'fr' }]}>FR</a>
+    <a href="/ko/ai/" class:list={['lang-btn', { active: lang === 'ko' }]}>KO</a>
+  </div>
+</div>
+
+<style>
+.nav-back-link {
+  display: inline-flex; align-items: center; gap: 4px;
+  color: rgba(255,255,255,0.45);
+  font-size: 0.75rem; font-weight: 600;
+  text-decoration: none;
+  border-right: 1px solid rgba(255,255,255,0.12);
+  padding-right: 16px;
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+.nav-back-link:hover { color: rgba(255,255,255,0.8); }
+</style>

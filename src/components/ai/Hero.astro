@@ -1,0 +1,33 @@
+---
+import { useAITranslations } from '../../i18n/utils';
+export interface Props { lang: 'en' | 'fr' | 'ko'; }
+const { lang } = Astro.props;
+const t = useAITranslations(lang);
+---
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-content">
+    <h1 class="hero-h1" set:html={t('hero.h1')} />
+    <p class="hero-sub">{t('hero.sub')}</p>
+    <div class="hero-ctas">
+      <a href="#services" class="btn-primary">{t('hero.cta1')}</a>
+      <a href="#pocs" class="btn-outline">{t('hero.cta2')}</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-card">
+      <div class="stat-num" data-count="60" data-prefix="40–" data-suffix="%">{t('stat1.num')}</div>
+      <div class="stat-label">{t('stat1.label')}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" data-count="4">4</div>
+      <div class="stat-label">{t('stat2.label')}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" data-count="5">5</div>
+      <div class="stat-label">{t('stat3.label')}</div>
+    </div>
+  </div>
+</section>

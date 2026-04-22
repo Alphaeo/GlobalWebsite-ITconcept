@@ -9,6 +9,7 @@ export default {
   'nav.careers': '채용',
   'nav.contact': '연락처',
   'nav.booking': '미팅 예약',
+  'nav.ai': 'AI 솔루션',
 
   'hero.tag': 'IT 컨설팅 & 아웃소싱 — 서울',
   'hero.h1': '한국의 <mark>IT 파트너</mark>',

@@ -1,0 +1,298 @@
+---
+import '../styles/ai.css';
+import Nav from '../components/ai/Nav.astro';
+import Footer from '../components/ai/Footer.astro';
+import CookieBanner from '../components/ai/CookieBanner.astro';
+import { useAITranslations } from '../i18n/utils';
+import type { Lang } from '../i18n/utils';
+import { ClientRouter } from 'astro:transitions';
+
+export interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const t = useAITranslations(lang);
+
+const site = 'https://it-concept.kr';
+const canonical = lang === 'fr' ? `${site}/fr/ai/` : lang === 'ko' ? `${site}/ko/ai/` : `${site}/ai/`;
+---
+<!DOCTYPE html>
+<html lang={lang}>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{t('meta.title')}</title>
+  <meta name="description" content={t('meta.desc')} />
+  <link rel="canonical" href={canonical} />
+  <link rel="alternate" hreflang="en" href={`${site}/ai/`} />
+  <link rel="alternate" hreflang="fr" href={`${site}/fr/ai/`} />
+  <link rel="alternate" hreflang="ko" href={`${site}/ko/ai/`} />
+  <link rel="alternate" hreflang="x-default" href={`${site}/ai/`} />
+  <link rel="apple-touch-icon" href="/favicon-icon.png" />
+  <meta name="theme-color" content="#E53935" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:title" content={t('meta.title')} />
+  <meta property="og:description" content={t('meta.desc')} />
+  <meta property="og:image" content={`${site}/logo.png`} />
+  <meta property="og:site_name" content="IT-CONCEPT AI & Data" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={t('meta.title')} />
+  <meta name="twitter:description" content={t('meta.desc')} />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="/favicon-icon.png" />
+  <ClientRouter />
+  <style>
+    @keyframes vt-fade-out {
+      from { opacity: 1; transform: scale(1); filter: blur(0); }
+      to   { opacity: 0; transform: scale(0.98); filter: blur(2px); }
+    }
+    @keyframes vt-fade-in-dark {
+      from { opacity: 0; transform: scale(1.02) translateY(10px); filter: blur(2px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+    }
+    ::view-transition-old(root) {
+      animation: 280ms cubic-bezier(0.4, 0, 0.2, 1) vt-fade-out both;
+    }
+    ::view-transition-new(root) {
+      animation: 380ms cubic-bezier(0.16, 1, 0.3, 1) 80ms vt-fade-in-dark both;
+    }
+  </style>
+</head>
+<body>
+  <Nav lang={lang} />
+  <slot />
+  <Footer lang={lang} />
+  <CookieBanner lang={lang} />
+
+  <div class="poc-modal-overlay" id="poc-modal-overlay" onclick="if(event.target===this)closePocModal()">
+    <div class="poc-modal" id="poc-modal-inner"></div>
+  </div>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    function animateCounter(el: HTMLElement) {
+      const target = parseInt(el.dataset.count || '0', 10);
+      const prefix = el.dataset.prefix || '';
+      const suffix = el.dataset.suffix || '';
+      const duration = 1600;
+      const start = performance.now();
+      function tick(now: number) {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = prefix + Math.round(eased * target) + suffix;
+        if (progress < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target as HTMLElement);
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.6 });
+    document.querySelectorAll('[data-count]').forEach(el => counterObserver.observe(el));
+
+    function toggleMobileNav() {
+      document.getElementById('mobileNav')!.classList.toggle('open');
+    }
+    (window as any).toggleMobileNav = toggleMobileNav;
+
+    const pocData: Record<number, any> = {
+      1: {
+        num: '01',
+        title: { fr: 'Enterprise Knowledge Copilot', en: 'Enterprise Knowledge Copilot', ko: '엔터프라이즈 지식 코파일럿' },
+        subtitle: {
+          fr: "Un assistant IA connecté à la base documentaire interne de l'entreprise — pour retrouver l'information, les procédures et les politiques en quelques secondes.",
+          en: "An AI assistant connected to the company's internal document base — to retrieve information, procedures and policies in seconds.",
+          ko: '회사 내부 문서 베이스에 연결된 AI 어시스턴트 — 정보, 절차, 정책을 몇 초 안에 검색합니다.'
+        },
+        context: {
+          fr: ["La connaissance interne est dispersée : SharePoint, Teams, mails, wikis", "Les employés passent en moyenne 1h30/jour à chercher de l'information", "L'onboarding est lent et coûteux sans accès structuré à la connaissance", "Les experts sont sursollicités pour des questions récurrentes"],
+          en: ["Internal knowledge is scattered: SharePoint, Teams, emails, wikis", "Employees spend an average of 1.5h/day searching for information", "Onboarding is slow and costly without structured knowledge access", "Experts are overburdened with recurring questions"],
+          ko: ["내부 지식이 분산됨: SharePoint, Teams, 이메일, 위키", "직원들이 정보 검색에 평균 하루 1.5시간 소요", "구조화된 지식 접근 없이 온보딩이 느리고 비용이 많이 듦", "전문가들이 반복적인 질문으로 과부하"]
+        },
+        archi: {
+          fr: ["Ingestion des sources (SharePoint, PDF, Teams) dans un index vectoriel (Azure AI Search)", "Pipeline RAG : découpage, embedding, retrieval sémantique", "LLM (Azure OpenAI GPT-4o) génère la réponse avec citations des sources", "Interface via Copilot Studio intégré dans Teams / web"],
+          en: ["Source ingestion (SharePoint, PDF, Teams) into a vector index (Azure AI Search)", "RAG pipeline: chunking, embedding, semantic retrieval", "LLM (Azure OpenAI GPT-4o) generates response with source citations", "Interface via Copilot Studio embedded in Teams / web"],
+          ko: ["소스 수집 (SharePoint, PDF, Teams) → 벡터 인덱스 (Azure AI Search)", "RAG 파이프라인: 청킹, 임베딩, 시맨틱 검색", "LLM (Azure OpenAI GPT-4o)이 소스 인용과 함께 응답 생성", "Copilot Studio를 통해 Teams/웹에 통합된 인터페이스"]
+        },
+        value: {
+          fr: ["−70% de temps passé à chercher une information", "Onboarding accéléré : nouvel arrivant autonome en quelques jours", "Réduction des sollicitations des experts internes", "Traçabilité : chaque réponse cite ses sources documentaires"],
+          en: ["−70% time spent searching for information", "Accelerated onboarding: new hires autonomous within days", "Reduced burden on internal experts", "Traceability: every answer cites its document sources"],
+          ko: ["정보 검색 시간 70% 감소", "가속화된 온보딩: 신입 직원이 며칠 내 자율성 확보", "내부 전문가 부담 감소", "추적 가능성: 모든 답변이 문서 출처를 인용"]
+        },
+        stack: ['Azure OpenAI GPT-4o', 'Azure AI Search (vector)', 'Copilot Studio', 'Microsoft Graph / SharePoint', 'Azure Functions', 'Microsoft Teams'],
+        videoUrl: null
+      },
+      2: {
+        num: '02',
+        title: { fr: 'AI Document Processing', en: 'AI Document Processing', ko: 'AI 문서 처리' },
+        subtitle: {
+          fr: "Automatisation du traitement documentaire (factures, contrats, appels d'offres) — extraction, validation et routage intelligents vers les systèmes métiers.",
+          en: "Automated document processing (invoices, contracts, RFPs) — intelligent extraction, validation and routing to business systems.",
+          ko: '문서 처리 자동화 (청구서, 계약서, RFP) — 지능적 추출, 검증 및 비즈니스 시스템으로 라우팅.'
+        },
+        context: {
+          fr: ["Le traitement manuel de documents prend plusieurs heures par batch", "Taux d'erreur élevé sur la saisie manuelle (5–15%)", "Les équipes finance/juridique sont saturées par des tâches répétitives", "Délais de traitement qui impactent la trésorerie et les délais fournisseurs"],
+          en: ["Manual document processing takes several hours per batch", "High error rate on manual entry (5–15%)", "Finance/legal teams saturated with repetitive tasks", "Processing delays impacting cash flow and supplier timelines"],
+          ko: ["수동 문서 처리에 배치당 수 시간 소요", "수동 입력 오류율 높음 (5–15%)", "재무/법무팀이 반복 작업으로 포화 상태", "처리 지연으로 현금 흐름 및 공급업체 일정에 영향"]
+        },
+        archi: {
+          fr: ["Ingestion du document (scan, PDF, email) via connecteur ou upload", "Azure Document Intelligence (OCR + layout) : extraction structurée des champs", "LLM pour validation, résumé et détection d'anomalies", "Routage vers ERP / SharePoint / CRM via Power Automate"],
+          en: ["Document ingestion (scan, PDF, email) via connector or upload", "Azure Document Intelligence (OCR + layout): structured field extraction", "LLM for validation, summarization and anomaly detection", "Routing to ERP / SharePoint / CRM via Power Automate"],
+          ko: ["커넥터 또는 업로드를 통한 문서 수집 (스캔, PDF, 이메일)", "Azure Document Intelligence (OCR + 레이아웃): 구조화된 필드 추출", "유효성 검사, 요약 및 이상 감지를 위한 LLM", "Power Automate를 통해 ERP / SharePoint / CRM으로 라우팅"]
+        },
+        value: {
+          fr: ["−80% de temps de traitement documentaire", "Taux d'erreur < 2% sur les champs extraits", "Traitement en continu, 24h/24, sans intervention humaine sur les cas standard", "Auditabilité complète de chaque décision de traitement"],
+          en: ["−80% document processing time", "Error rate < 2% on extracted fields", "Continuous processing, 24/7, without human intervention on standard cases", "Full audit trail for every processing decision"],
+          ko: ["문서 처리 시간 80% 감소", "추출 필드 오류율 2% 미만", "표준 케이스에서 인간 개입 없이 24/7 지속 처리", "모든 처리 결정에 대한 완전한 감사 추적"]
+        },
+        stack: ['Azure Document Intelligence', 'Azure OpenAI', 'Power Automate', 'Azure Blob Storage', 'SharePoint / ERP connectors', 'Azure Logic Apps'],
+        videoUrl: null
+      },
+      3: {
+        num: '03',
+        title: { fr: 'Data Copilot', en: 'Data Copilot', ko: '데이터 코파일럿' },
+        subtitle: {
+          fr: "Interrogez vos données en langage naturel, générez des requêtes SQL et obtenez des dashboards à la demande — sans compétence technique requise.",
+          en: "Query your data in natural language, generate SQL queries and get on-demand dashboards — no technical skills required.",
+          ko: '자연어로 데이터를 조회하고, SQL 쿼리를 생성하고, 온디맨드 대시보드를 얻으세요 — 기술적 역량 불필요.'
+        },
+        context: {
+          fr: ["Les décideurs dépendent des analystes pour obtenir une donnée simple", "Les délais pour une demande d'analyse standard : 2 à 5 jours", "Les équipes data sont saturées de demandes ad hoc à faible valeur ajoutée", "Les données existent mais restent inaccessibles sans SQL"],
+          en: ["Decision-makers depend on analysts for simple data queries", "Lead time for a standard analysis request: 2 to 5 days", "Data teams overwhelmed with low-value ad hoc requests", "Data exists but remains inaccessible without SQL"],
+          ko: ["의사결정자들이 간단한 데이터 조회를 위해 분석가에 의존", "표준 분석 요청 처리 시간: 2~5일", "데이터팀이 저부가가치 임시 요청으로 과부하", "데이터는 존재하지만 SQL 없이는 접근 불가"]
+        },
+        archi: {
+          fr: ["Interface conversationnelle (Teams, web app) pour la question en langage naturel", "LLM (GPT-4o) génère la requête SQL selon le schéma base de données", "Exécution sécurisée sur Fabric Lakehouse / Azure Synapse / SQL", "Résultat : tableau + graphique généré automatiquement + explication en langage naturel"],
+          en: ["Conversational interface (Teams, web app) for natural language questions", "LLM (GPT-4o) generates SQL query based on database schema", "Secure execution on Fabric Lakehouse / Azure Synapse / SQL", "Result: table + auto-generated chart + natural language explanation"],
+          ko: ["자연어 질문을 위한 대화형 인터페이스 (Teams, 웹 앱)", "LLM (GPT-4o)이 데이터베이스 스키마에 기반한 SQL 쿼리 생성", "Fabric Lakehouse / Azure Synapse / SQL에서 보안 실행", "결과: 표 + 자동 생성 차트 + 자연어 설명"]
+        },
+        value: {
+          fr: ["Autonomie données pour les équipes métier et dirigeants", "−60% de requêtes ad hoc vers les équipes data", "Décisions plus rapides : réponse en secondes vs jours", "Adoption naturelle via Teams sans outil supplémentaire"],
+          en: ["Data autonomy for business teams and executives", "−60% ad hoc requests to data teams", "Faster decisions: answer in seconds vs days", "Natural adoption via Teams without additional tool"],
+          ko: ["비즈니스팀과 경영진의 데이터 자율성", "데이터팀에 대한 임시 요청 60% 감소", "더 빠른 결정: 며칠 대신 몇 초 안에 답변", "Teams를 통한 자연스러운 도입, 추가 도구 불필요"]
+        },
+        stack: ['Azure OpenAI GPT-4o', 'Microsoft Fabric / Lakehouse', 'Azure Synapse Analytics', 'Power BI Embedded', 'Text-to-SQL pipeline', 'Microsoft Teams'],
+        videoUrl: null
+      },
+      4: {
+        num: '04',
+        title: { fr: 'AI Workflow Automation Agent', en: 'AI Workflow Automation Agent', ko: 'AI 워크플로우 자동화 에이전트' },
+        subtitle: {
+          fr: "Un agent IA qui prend en charge le triage, la classification et le traitement des flux entrants (emails, formulaires, tickets) pour déclencher automatiquement les bons workflows.",
+          en: "An AI agent that handles triage, classification and processing of incoming flows (emails, forms, tickets) to automatically trigger the right workflows.",
+          ko: '수신 흐름 (이메일, 양식, 티켓)의 분류, 분류 및 처리를 담당하여 올바른 워크플로우를 자동으로 트리거하는 AI 에이전트.'
+        },
+        context: {
+          fr: ["Triage et réponse aux emails : 2 à 4h de travail manuel par jour par employé", "Les données clients/fournisseurs ne sont pas saisies en temps réel dans le CRM", "Les workflows métier (validation, escalade) sont déclenchés trop tard ou oubliés", "Silotage des outils : email, CRM, ERP et outils collaboratifs ne communiquent pas"],
+          en: ["Email triage and response: 2 to 4h of manual work per employee per day", "Customer/supplier data not entered in real time in the CRM", "Business workflows (validation, escalation) triggered too late or forgotten", "Tool silos: email, CRM, ERP and collaboration tools don't communicate"],
+          ko: ["이메일 분류 및 응답: 직원당 하루 2~4시간 수작업", "고객/공급업체 데이터가 CRM에 실시간으로 입력되지 않음", "비즈니스 워크플로우 (검증, 에스컬레이션)가 너무 늦게 트리거되거나 잊힘", "도구 사일로: 이메일, CRM, ERP 및 협업 도구가 통신하지 않음"]
+        },
+        archi: {
+          fr: ["Déclencheur : email reçu / formulaire soumis / ticket créé", "Agent LLM : classification d'intention, extraction d'entités, scoring de priorité", "Routage conditionnel : réponse automatique / escalade humaine / mise à jour CRM", "Connecteurs : API CRM, ERP, Slack, ITSM via n8n ou Power Automate"],
+          en: ["Trigger: email received / form submitted / ticket created", "LLM agent: intent classification, entity extraction, priority scoring", "Conditional routing: auto-reply / human escalation / CRM update", "Connectors: CRM, ERP, Slack, ITSM APIs via n8n or Power Automate"],
+          ko: ["트리거: 이메일 수신 / 양식 제출 / 티켓 생성", "LLM 에이전트: 의도 분류, 엔티티 추출, 우선순위 점수화", "조건부 라우팅: 자동 응답 / 인간 에스컬레이션 / CRM 업데이트", "커넥터: n8n 또는 Power Automate를 통한 CRM, ERP, Slack, ITSM API"]
+        },
+        value: {
+          fr: ["−70% de traitement manuel sur les flux entrants", "CRM mis à jour en temps réel, sans saisie humaine", "Temps de réponse aux clients : < 5 minutes vs plusieurs heures", "Escalades automatiques sur les cas à risque ou haute priorité"],
+          en: ["−70% manual processing of incoming flows", "CRM updated in real time, without human entry", "Customer response time: < 5 minutes vs several hours", "Automatic escalations on high-risk or high-priority cases"],
+          ko: ["수신 흐름 수동 처리 70% 감소", "인간 입력 없이 실시간 CRM 업데이트", "고객 응답 시간: 수 시간 대비 5분 미만", "고위험 또는 고우선순위 케이스의 자동 에스컬레이션"]
+        },
+        stack: ['n8n / Power Automate', 'LangChain Agents', 'Azure OpenAI', 'CRM / ERP REST APIs', 'Slack / Teams webhooks', 'LLM Orchestration'],
+        videoUrl: null
+      }
+    };
+
+    const currentLang = document.documentElement.lang as 'en' | 'fr' | 'ko';
+
+    function openPocModal(id: number) {
+      const d = pocData[id];
+      const lang = currentLang;
+      const labels: Record<string, any> = {
+        fr: { ctx: 'Contexte & problème', archi: 'Architecture & fonctionnement', value: 'Valeur business', stack: 'Stack technique', close: 'Fermer', demo: '▶ Voir la démo' },
+        en: { ctx: 'Context & problem', archi: 'Architecture & how it works', value: 'Business value', stack: 'Tech stack', close: 'Close', demo: '▶ Watch Demo' },
+        ko: { ctx: '컨텍스트 & 문제', archi: '아키텍처 & 작동 방식', value: '비즈니스 가치', stack: '기술 스택', close: '닫기', demo: '▶ 데모 보기' }
+      }[lang];
+
+      const li = (arr: string[]) => arr.map(x => `<li>${x}</li>`).join('');
+      const videoSection = d.videoUrl ? `
+        <div class="poc-modal-video">
+          <button class="poc-video-btn" onclick="togglePocVideo(this, '${d.videoUrl}')">${labels.demo}</button>
+          <div class="poc-video-player" id="poc-video-player"></div>
+        </div>` : '';
+
+      document.getElementById('poc-modal-inner')!.innerHTML = `
+        <button class="poc-modal-close" onclick="closePocModal()" aria-label="${labels.close}">✕</button>
+        <div class="poc-modal-body">
+          <div class="poc-modal-num">${d.num}</div>
+          <h2 class="poc-modal-title">${d.title[lang]}</h2>
+          <p class="poc-modal-subtitle">${d.subtitle[lang]}</p>
+          <div class="poc-modal-section"><h4>${labels.ctx}</h4><ul>${li(d.context[lang])}</ul></div>
+          <div class="poc-modal-section"><h4>${labels.archi}</h4><ul>${li(d.archi[lang])}</ul></div>
+          <div class="poc-modal-section"><h4>${labels.value}</h4><ul>${li(d.value[lang])}</ul></div>
+          <div class="poc-modal-section"><h4>${labels.stack}</h4><div class="poc-modal-tags">${d.stack.map((t: string) => `<span class="poc-modal-tag">${t}</span>`).join('')}</div></div>
+          ${videoSection}
+        </div>`;
+      document.getElementById('poc-modal-overlay')!.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function togglePocVideo(btn: HTMLElement, url: string) {
+      const player = document.getElementById('poc-video-player')!;
+      if (player.classList.contains('open')) {
+        player.classList.remove('open');
+        player.innerHTML = '';
+      } else {
+        let embed = '';
+        if (url.includes('youtube.com') || url.includes('youtu.be')) {
+          const vid = url.includes('youtu.be') ? url.split('/').pop() : new URLSearchParams(new URL(url).search).get('v');
+          embed = `<iframe src="https://www.youtube.com/embed/${vid}?autoplay=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+        } else if (url.includes('vimeo.com')) {
+          const vid = url.split('/').pop();
+          embed = `<iframe src="https://player.vimeo.com/video/${vid}?autoplay=1" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+        } else {
+          embed = `<video src="${url}" controls autoplay></video>`;
+        }
+        player.innerHTML = embed;
+        player.classList.add('open');
+      }
+    }
+
+    function closePocModal() {
+      document.getElementById('poc-modal-overlay')!.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closePocModal(); });
+
+    (window as any).openPocModal = openPocModal;
+    (window as any).togglePocVideo = togglePocVideo;
+    (window as any).closePocModal = closePocModal;
+
+    function dismissCookies(accepted: boolean) {
+      localStorage.setItem('cookie_consent_ai', accepted ? 'accepted' : 'declined');
+      document.getElementById('cookie-banner')!.classList.remove('visible');
+    }
+    (window as any).dismissCookies = dismissCookies;
+
+    if (!localStorage.getItem('cookie_consent_ai')) {
+      setTimeout(() => {
+        const b = document.getElementById('cookie-banner');
+        if (b) b.classList.add('visible');
+      }, 1200);
+    }
+  </script>
+</body>
+</html>

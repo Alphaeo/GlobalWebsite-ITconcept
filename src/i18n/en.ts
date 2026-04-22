@@ -9,6 +9,7 @@ export default {
   'nav.careers': 'Careers',
   'nav.contact': 'Contact',
   'nav.booking': 'Book a call',
+  'nav.ai': 'AI Solutions',
 
   'hero.tag': 'IT Consulting & Outsourcing — Seoul',
   'hero.h1': 'Your IT partner <mark>in South Korea</mark>',

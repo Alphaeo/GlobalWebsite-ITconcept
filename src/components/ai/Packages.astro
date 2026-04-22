@@ -1,0 +1,79 @@
+---
+import { useAITranslations } from '../../i18n/utils';
+export interface Props { lang: 'en' | 'fr' | 'ko'; }
+const { lang } = Astro.props;
+const t = useAITranslations(lang);
+---
+<section id="packages">
+  <span class="section-label reveal">{t('pkg.label')}</span>
+  <h2 class="section-title reveal">{t('pkg.title')}</h2>
+  <p class="section-desc reveal">{t('pkg.desc')}</p>
+  <div class="packages-grid">
+
+    <div class="pkg-card reveal">
+      <span class="pkg-duration">{t('pkg1.duration')}</span>
+      <h3 class="pkg-title">{t('pkg1.title')}</h3>
+      <p class="pkg-desc">{t('pkg1.desc')}</p>
+      <ul class="pkg-list">
+        <li>{t('pkg1.d1')}</li>
+        <li>{t('pkg1.d2')}</li>
+        <li>{t('pkg1.d3')}</li>
+        <li>{t('pkg1.d4')}</li>
+      </ul>
+      <a href="#contact" class="pkg-cta">{t('pkg.cta')}</a>
+    </div>
+
+    <div class="pkg-card reveal">
+      <span class="pkg-duration">{t('pkg2.duration')}</span>
+      <h3 class="pkg-title">{t('pkg2.title')}</h3>
+      <p class="pkg-desc">{t('pkg2.desc')}</p>
+      <ul class="pkg-list">
+        <li>{t('pkg2.d1')}</li>
+        <li>{t('pkg2.d2')}</li>
+        <li>{t('pkg2.d3')}</li>
+        <li>{t('pkg2.d4')}</li>
+      </ul>
+      <a href="#contact" class="pkg-cta">{t('pkg.cta')}</a>
+    </div>
+
+    <div class="pkg-card featured reveal">
+      <span class="pkg-duration">{t('pkg3.duration')}</span>
+      <h3 class="pkg-title">{t('pkg3.title')}</h3>
+      <p class="pkg-desc">{t('pkg3.desc')}</p>
+      <ul class="pkg-list">
+        <li>{t('pkg3.d1')}</li>
+        <li>{t('pkg3.d2')}</li>
+        <li>{t('pkg3.d3')}</li>
+        <li>{t('pkg3.d4')}</li>
+      </ul>
+      <a href="#contact" class="pkg-cta">{t('pkg.cta.featured')}</a>
+    </div>
+
+    <div class="pkg-card reveal">
+      <span class="pkg-duration">{t('pkg4.duration')}</span>
+      <h3 class="pkg-title">{t('pkg4.title')}</h3>
+      <p class="pkg-desc">{t('pkg4.desc')}</p>
+      <ul class="pkg-list">
+        <li>{t('pkg4.d1')}</li>
+        <li>{t('pkg4.d2')}</li>
+        <li>{t('pkg4.d3')}</li>
+        <li>{t('pkg4.d4')}</li>
+      </ul>
+      <a href="#contact" class="pkg-cta">{t('pkg.cta')}</a>
+    </div>
+
+    <div class="pkg-card reveal">
+      <span class="pkg-duration">{t('pkg5.duration')}</span>
+      <h3 class="pkg-title">{t('pkg5.title')}</h3>
+      <p class="pkg-desc">{t('pkg5.desc')}</p>
+      <ul class="pkg-list">
+        <li>{t('pkg5.d1')}</li>
+        <li>{t('pkg5.d2')}</li>
+        <li>{t('pkg5.d3')}</li>
+        <li>{t('pkg5.d4')}</li>
+      </ul>
+      <a href="#contact" class="pkg-cta">{t('pkg.cta')}</a>
+    </div>
+
+  </div>
+</section>

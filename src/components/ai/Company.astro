@@ -1,0 +1,26 @@
+---
+import { useAITranslations } from '../../i18n/utils';
+export interface Props { lang: 'en' | 'fr' | 'ko'; }
+const { lang } = Astro.props;
+const t = useAITranslations(lang);
+---
+<section id="company">
+  <span class="section-label reveal" style="color:var(--red-light)">{t('co.label')}</span>
+  <h2 class="section-title reveal" style="color:var(--white)">{t('co.title')}</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:40px" class="company-grid reveal">
+    <div style="background:var(--dark2);border-radius:16px;padding:36px;border:1px solid rgba(255,255,255,0.06)">
+      <h3 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:16px">{t('co.about.title')}</h3>
+      <p style="color:rgba(255,255,255,0.65);line-height:1.8;margin-bottom:16px">{t('co.about.desc')}</p>
+      <div style="display:flex;flex-direction:column;gap:8px;font-size:0.875rem;color:rgba(255,255,255,0.45)">
+        <span>📍 #603 Dangsan Bldg, 147 Yeongdeungpo-ro, Seoul 07266</span>
+        <span>📧 ai@it-concept.kr</span>
+        <span>📞 +82 2-553-7854</span>
+      </div>
+    </div>
+    <div style="background:var(--dark2);border-radius:16px;padding:36px;border:1px solid rgba(255,255,255,0.06)">
+      <h3 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:16px">{t('co.careers.title')}</h3>
+      <p style="color:rgba(255,255,255,0.65);line-height:1.8;margin-bottom:24px">{t('co.careers.desc')}</p>
+      <a href="mailto:ai@it-concept.kr?subject=Candidature spontanée" class="btn-primary">{t('co.careers.cta')}</a>
+    </div>
+  </div>
+</section>

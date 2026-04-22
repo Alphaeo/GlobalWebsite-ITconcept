@@ -1,0 +1,99 @@
+---
+import { useAITranslations } from '../../i18n/utils';
+export interface Props { lang: 'en' | 'fr' | 'ko'; }
+const { lang } = Astro.props;
+const t = useAITranslations(lang);
+---
+<section id="contact">
+  <div class="contact-inner">
+    <div class="contact-info reveal">
+      <span class="section-label" style="color:var(--red-light)">{t('contact.label')}</span>
+      <h2 class="section-title">{t('contact.title')}</h2>
+      <p class="section-desc" style="color:rgba(255,255,255,0.5)">{t('contact.desc')}</p>
+      <ul class="contact-details">
+        <li>
+          <div class="ci">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <span>#603 Dangsan Bldg, 147, Yeongdeungpo-ro,<br>Yeongdeungpo-gu, 07266 — Seoul</span>
+        </li>
+        <li>
+          <div class="ci">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <a href="mailto:ai@it-concept.kr" style="color:var(--red-light);text-decoration:none">ai@it-concept.kr</a>
+        </li>
+        <li>
+          <div class="ci">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13 19.79 19.79 0 0 1 1.61 4.35 2 2 0 0 1 3.58 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.16 6.16l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <a href="tel:+82255378540" style="color:rgba(255,255,255,0.7);text-decoration:none">+82 2-553-7854</a>
+        </li>
+      </ul>
+      <a href="https://calendly.com/it-concept-ai" target="_blank" rel="noopener" class="btn-primary" style="margin-top:28px;display:inline-flex;align-items:center;gap:8px;text-decoration:none">
+        <svg style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        {t('contact.booking')}
+      </a>
+    </div>
+    <form class="contact-form reveal" id="contact-form">
+      <input type="hidden" name="_replyto" id="form-replyto" />
+      <div class="form-row">
+        <div class="form-group">
+          <label>{t('form.name')}</label>
+          <input type="text" name="name" placeholder={t('form.name.ph')} required />
+        </div>
+        <div class="form-group">
+          <label>{t('form.email')}</label>
+          <input type="email" name="email" id="form-email-input" placeholder={t('form.email.ph')} required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>{t('form.company')}</label>
+        <input type="text" name="company" placeholder={t('form.company.ph')} />
+      </div>
+      <div class="form-group">
+        <label>{t('form.message')}</label>
+        <textarea name="message" placeholder={t('form.message.ph')} required></textarea>
+      </div>
+      <button class="form-submit" type="submit" id="form-btn">{t('form.submit')}</button>
+      <div id="form-success" style="display:none;margin-top:16px;color:#4ade80;font-weight:600">
+        {lang === 'fr' ? '✓ Message envoyé ! Nous vous répondrons sous 24h.' : lang === 'ko' ? '✓ 메시지가 전송되었습니다! 24시간 내에 답변드리겠습니다.' : '✓ Message sent! We\'ll get back to you within 24h.'}
+      </div>
+      <div id="form-error" style="display:none;margin-top:16px;color:#f87171;font-weight:600">
+        {lang === 'fr' ? '✗ Erreur lors de l\'envoi. Réessayez ou écrivez à ai@it-concept.kr' : lang === 'ko' ? '✗ 전송 오류. 다시 시도하거나 ai@it-concept.kr로 이메일 보내주세요.' : '✗ Error sending. Please retry or email ai@it-concept.kr'}
+      </div>
+    </form>
+
+    <script>
+      const form = document.getElementById('contact-form') as HTMLFormElement;
+      const emailInput = document.getElementById('form-email-input') as HTMLInputElement;
+      const replyto = document.getElementById('form-replyto') as HTMLInputElement;
+      emailInput?.addEventListener('input', () => { replyto.value = emailInput.value; });
+
+      form?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('form-btn') as HTMLButtonElement;
+        btn.disabled = true;
+        btn.textContent = '...';
+        try {
+          const res = await fetch('https://formspree.io/louis.mathis@it-concept.kr', {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { Accept: 'application/json' }
+          });
+          if (res.ok) {
+            form.reset();
+            btn.style.display = 'none';
+            (document.getElementById('form-success') as HTMLElement).style.display = 'block';
+          } else {
+            throw new Error();
+          }
+        } catch {
+          btn.disabled = false;
+          btn.textContent = btn.textContent === '...' ? 'Réessayer' : btn.textContent;
+          (document.getElementById('form-error') as HTMLElement).style.display = 'block';
+        }
+      });
+    </script>
+  </div>
+</section>

@@ -1,0 +1,54 @@
+---
+import { useAITranslations } from '../../i18n/utils';
+export interface Props { lang: 'en' | 'fr' | 'ko'; }
+const { lang } = Astro.props;
+const t = useAITranslations(lang);
+---
+<section id="faq">
+  <span class="section-label reveal">{t('faq.label')}</span>
+  <h2 class="section-title reveal">{t('faq.title')}</h2>
+  <p class="section-desc reveal">{t('faq.desc')}</p>
+  <div class="faq-list reveal">
+
+    <details class="faq-item">
+      <summary class="faq-q">{t('faq1.q')}</summary>
+      <div class="faq-a">{t('faq1.a')}</div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-q">{t('faq2.q')}</summary>
+      <div class="faq-a">{t('faq2.a')}</div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-q">{t('faq3.q')}</summary>
+      <div class="faq-a">{t('faq3.a')}</div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-q">{t('faq4.q')}</summary>
+      <div class="faq-a">{t('faq4.a')}</div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-q">{t('faq5.q')}</summary>
+      <div class="faq-a">{t('faq5.a')}</div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-q">{t('faq7.q')}</summary>
+      <div class="faq-a">{t('faq7.a')}</div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-q">{t('faq8.q')}</summary>
+      <div class="faq-a">{t('faq8.a')}</div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-q">{t('faq10.q')}</summary>
+      <div class="faq-a">{t('faq10.a')}</div>
+    </details>
+
+  </div>
+</section>

@@ -9,6 +9,7 @@ export default {
   'nav.careers': 'Recrutement',
   'nav.contact': 'Contact',
   'nav.booking': 'Prendre RDV',
+  'nav.ai': 'Solutions IA',
 
   'hero.tag': 'Conseil & Infogérance IT — Séoul',
   'hero.h1': 'Votre partenaire IT <mark>en Corée du Sud</mark>',

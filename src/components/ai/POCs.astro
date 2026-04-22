@@ -1,0 +1,82 @@
+---
+import { useAITranslations } from '../../i18n/utils';
+export interface Props { lang: 'en' | 'fr' | 'ko'; }
+const { lang } = Astro.props;
+const t = useAITranslations(lang);
+---
+<section id="pocs">
+  <span class="section-label reveal">{t('poc.label')}</span>
+  <h2 class="section-title reveal">{t('poc.title')}</h2>
+  <p class="section-desc reveal">{t('poc.desc')}</p>
+  <div class="pocs-grid">
+
+    <div class="poc-card reveal">
+      <div class="poc-num">01</div>
+      <h3 class="poc-title">{t('poc1.title')}</h3>
+      <ul class="poc-caps">
+        <li>{t('poc1.c1')}</li>
+        <li>{t('poc1.c2')}</li>
+        <li>{t('poc1.c3')}</li>
+      </ul>
+      <div class="poc-tech-tags">
+        <span class="poc-tech">Azure OpenAI</span>
+        <span class="poc-tech">RAG Pipeline</span>
+        <span class="poc-tech">Vector DB</span>
+        <span class="poc-tech">Copilot Studio</span>
+      </div>
+      <button class="poc-detail-btn" onclick="openPocModal(1)">{t('poc.detail')}</button>
+    </div>
+
+    <div class="poc-card reveal">
+      <div class="poc-num">02</div>
+      <h3 class="poc-title">{t('poc2.title')}</h3>
+      <ul class="poc-caps">
+        <li>{t('poc2.c1')}</li>
+        <li>{t('poc2.c2')}</li>
+        <li>{t('poc2.c3')}</li>
+        <li>{t('poc2.c4')}</li>
+      </ul>
+      <div class="poc-tech-tags">
+        <span class="poc-tech">OCR</span>
+        <span class="poc-tech">NLP</span>
+        <span class="poc-tech">Azure Document Intelligence</span>
+        <span class="poc-tech">Automation Pipelines</span>
+      </div>
+      <button class="poc-detail-btn" onclick="openPocModal(2)">{t('poc.detail')}</button>
+    </div>
+
+    <div class="poc-card reveal">
+      <div class="poc-num">03</div>
+      <h3 class="poc-title">{t('poc3.title')}</h3>
+      <ul class="poc-caps">
+        <li>{t('poc3.c1')}</li>
+        <li>{t('poc3.c2')}</li>
+        <li>{t('poc3.c3')}</li>
+      </ul>
+      <div class="poc-tech-tags">
+        <span class="poc-tech">Azure OpenAI</span>
+        <span class="poc-tech">Power BI</span>
+        <span class="poc-tech">Fabric Lakehouse</span>
+      </div>
+      <button class="poc-detail-btn" onclick="openPocModal(3)">{t('poc.detail')}</button>
+    </div>
+
+    <div class="poc-card reveal">
+      <div class="poc-num">04</div>
+      <h3 class="poc-title">{t('poc4.title')}</h3>
+      <ul class="poc-caps">
+        <li>{t('poc4.c1')}</li>
+        <li>{t('poc4.c2')}</li>
+        <li>{t('poc4.c3')}</li>
+      </ul>
+      <div class="poc-tech-tags">
+        <span class="poc-tech">n8n</span>
+        <span class="poc-tech">AI Agents</span>
+        <span class="poc-tech">APIs</span>
+        <span class="poc-tech">LLM Orchestration</span>
+      </div>
+      <button class="poc-detail-btn" onclick="openPocModal(4)">{t('poc.detail')}</button>
+    </div>
+
+  </div>
+</section>

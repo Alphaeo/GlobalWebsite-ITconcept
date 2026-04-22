@@ -1,0 +1,74 @@
+---
+import { useAITranslations } from '../../i18n/utils';
+export interface Props { lang: 'en' | 'fr' | 'ko'; }
+const { lang } = Astro.props;
+const t = useAITranslations(lang);
+---
+<section id="services">
+  <span class="section-label reveal">{t('svc.label')}</span>
+  <h2 class="section-title reveal">{t('svc.title')}</h2>
+  <p class="section-desc reveal">{t('svc.desc')}</p>
+  <div class="services-grid">
+
+    <div class="service-card reveal">
+      <div class="service-num">01</div>
+      <span class="service-tag">{t('svc1.tag')}</span>
+      <h3 class="service-title">{t('svc1.title')}</h3>
+      <p class="service-pain">{t('svc1.pain')}</p>
+      <ul class="service-points">
+        <li>{t('svc1.p1')}</li>
+        <li>{t('svc1.p2')}</li>
+        <li>{t('svc1.p3')}</li>
+        <li>{t('svc1.p4')}</li>
+      </ul>
+      <div class="service-kpi" set:html={t('svc1.kpi')} />
+      <div class="service-addons" set:html={t('svc1.addons')} />
+    </div>
+
+    <div class="service-card reveal">
+      <div class="service-num">02</div>
+      <span class="service-tag">{t('svc2.tag')}</span>
+      <h3 class="service-title">{t('svc2.title')}</h3>
+      <p class="service-pain">{t('svc2.pain')}</p>
+      <ul class="service-points">
+        <li>{t('svc2.p1')}</li>
+        <li>{t('svc2.p2')}</li>
+        <li>{t('svc2.p3')}</li>
+        <li>{t('svc2.p4')}</li>
+      </ul>
+      <div class="service-kpi" set:html={t('svc2.kpi')} />
+      <div class="service-addons" set:html={t('svc2.addons')} />
+    </div>
+
+    <div class="service-card reveal">
+      <div class="service-num">03</div>
+      <span class="service-tag">{t('svc3.tag')}</span>
+      <h3 class="service-title">{t('svc3.title')}</h3>
+      <p class="service-pain">{t('svc3.pain')}</p>
+      <ul class="service-points">
+        <li>{t('svc3.p1')}</li>
+        <li>{t('svc3.p2')}</li>
+        <li>{t('svc3.p3')}</li>
+        <li>{t('svc3.p4')}</li>
+      </ul>
+      <div class="service-kpi" set:html={t('svc3.kpi')} />
+      <div class="service-addons" set:html={t('svc3.addons')} />
+    </div>
+
+    <div class="service-card reveal">
+      <div class="service-num">04</div>
+      <span class="service-tag">{t('svc4.tag')}</span>
+      <h3 class="service-title">{t('svc4.title')}</h3>
+      <p class="service-pain">{t('svc4.pain')}</p>
+      <ul class="service-points">
+        <li>{t('svc4.p1')}</li>
+        <li>{t('svc4.p2')}</li>
+        <li>{t('svc4.p3')}</li>
+        <li>{t('svc4.p4')}</li>
+      </ul>
+      <div class="service-kpi" set:html={t('svc4.kpi')} />
+      <div class="service-addons" set:html={t('svc4.addons')} />
+    </div>
+
+  </div>
+</section>
