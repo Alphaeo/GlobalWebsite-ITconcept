@@ -166,10 +166,10 @@ section { padding: 100px 5%; }
 .logo-item { display: flex; align-items: center; justify-content: center; height: 56px; flex-shrink: 0; }
 .logo-item img {
   height: 38px; width: auto; max-width: 140px; object-fit: contain;
-  filter: grayscale(1) brightness(2.5) opacity(0.4);
+  filter: grayscale(1) invert(1) opacity(0.5);
   transition: filter 0.35s;
 }
-.logo-item img:hover { filter: grayscale(0) brightness(1) opacity(1); cursor: default; }
+.logo-item img:hover { filter: grayscale(0) invert(0) brightness(1.1) opacity(1); cursor: default; }
 @keyframes marquee-scroll {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
@@ -237,6 +237,22 @@ section { padding: 100px 5%; }
 .job-badge { font-size: 0.78rem; font-weight: 600; padding: 4px 10px; border-radius: 20px; background: rgba(229,57,53,0.08); color: var(--red); }
 .job-deadline { font-size: 0.8rem; color: var(--text-muted); }
 .jobs-list { display: flex; flex-direction: column; gap: 16px; }
+
+/* ─── PARTNERS ─── */
+#partners { background: var(--white); padding: 64px var(--pad); }
+#partners .section-label { display: block; text-align: center; margin-bottom: 10px; }
+#partners .section-title { text-align: center; margin-bottom: 48px; }
+.partners-logos {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+  gap: 40px 64px;
+}
+.partner-item { display: flex; align-items: center; justify-content: center; }
+.partner-item img {
+  height: 48px; width: auto; max-width: 180px; object-fit: contain;
+  filter: grayscale(1) opacity(0.6);
+  transition: filter 0.35s;
+}
+.partner-item img:hover { filter: grayscale(0) opacity(1); cursor: default; }
 
 /* ─── CONTACT ─── */
 #contact { background: var(--grey); }

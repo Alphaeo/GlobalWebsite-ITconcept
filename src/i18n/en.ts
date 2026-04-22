@@ -51,6 +51,9 @@ export default {
   'clients.label': 'They trust us',
   'clients.also': 'And also',
 
+  'partners.label': 'Technology Partners',
+  'partners.title': 'Our Partners',
+
   'blog.label': 'Insights',
   'blog.title': 'Latest articles',
   'blog.desc': 'IT best practices, security advice, and technology news for companies in Korea.',

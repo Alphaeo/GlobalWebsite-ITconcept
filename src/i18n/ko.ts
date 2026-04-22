@@ -51,6 +51,9 @@ export default {
   'clients.label': '고객사',
   'clients.also': '그 외에도',
 
+  'partners.label': '기술 파트너',
+  'partners.title': '파트너사',
+
   'blog.label': '인사이트',
   'blog.title': '최신 아티클',
   'blog.desc': '한국 기업을 위한 IT 모범 사례, 보안 조언 및 기술 뉴스.',

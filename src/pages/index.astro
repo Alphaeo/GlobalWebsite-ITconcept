@@ -18,7 +18,13 @@ const logos = [
   { src: '/cma-cgm.png', alt: 'CMA CGM' },
   { src: '/Forvis-Mazars-logo-1024x819.jpg', alt: 'Forvis Mazars' },
   { src: '/longchamp-logo-freelogovectors.net_.png', alt: 'Longchamp' },
-  { src: '/asiance-squarelogo-1545629783042.webp', alt: 'Asiance' },
+  { src: '/logo-asiance-250x100.png', alt: 'Asiance' },
+  { src: '/logo-fkcci-250x100.png', alt: 'FKCCI' },
+  { src: '/logo-lyceefrancaisdeseoul-250x100.png', alt: 'Lycée Français de Séoul' },
+];
+const partners = [
+  { src: '/logo-fortinet-250x100.png', alt: 'Fortinet' },
+  { src: '/logo-microsoft-partner-250x100.png', alt: 'Microsoft Partner' },
 ];
 const alsoClients = ['Bureau Veritas','IATA','TotalEnergies','Hermès','BNP Paribas','Thales','LVMH','Schneider Electric','Renault','Orange','Michelin','Saint-Gobain','Microsoft','Fortinet','F-Secure','Cisco'];
 const stats = [
@@ -149,6 +155,17 @@ const stats = [
       <div class="clients-also-list">
         {alsoClients.map(c => <span class="client-badge">{c}</span>)}
       </div>
+    </div>
+  </section>
+
+  <!-- PARTNERS -->
+  <section id="partners">
+    <span class="section-label reveal">{t('partners.label')}</span>
+    <h2 class="section-title reveal">{t('partners.title')}</h2>
+    <div class="partners-logos reveal">
+      {partners.map(p => (
+        <div class="partner-item"><img src={p.src} alt={p.alt} /></div>
+      ))}
     </div>
   </section>
 

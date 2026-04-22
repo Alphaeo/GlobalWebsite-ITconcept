@@ -51,6 +51,9 @@ export default {
   'clients.label': 'Ils nous font confiance',
   'clients.also': 'Mais aussi',
 
+  'partners.label': 'Partenaires Technologiques',
+  'partners.title': 'Nos Partenaires',
+
   'blog.label': 'Insights',
   'blog.title': 'Derniers articles',
   'blog.desc': 'Bonnes pratiques IT, conseils sécurité et actualité technologique pour les entreprises en Corée.',
