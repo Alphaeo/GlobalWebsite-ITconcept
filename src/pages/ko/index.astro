@@ -156,16 +156,13 @@ const stats = [
         {alsoClients.map(c => <span class="client-badge">{c}</span>)}
       </div>
     </div>
-  </section>
-
-  <!-- PARTNERS -->
-  <section id="partners">
-    <span class="section-label reveal">{t('partners.label')}</span>
-    <h2 class="section-title reveal">{t('partners.title')}</h2>
-    <div class="partners-logos reveal">
-      {partners.map(p => (
-        <div class="partner-item"><img src={p.src} alt={p.alt} /></div>
-      ))}
+    <div class="partners-row reveal">
+      <div class="partners-row-label">{t('partners.label')}</div>
+      <div class="partners-logos">
+        {partners.map(p => (
+          <div class="partner-item"><img src={p.src} alt={p.alt} /></div>
+        ))}
+      </div>
     </div>
   </section>
 
