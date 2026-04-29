@@ -89,10 +89,6 @@ const orgDesc = lang === 'fr'
     }
   </script>
   <script>
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach((e, i) => { if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 80); });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
     function toggleMobileNav() { document.getElementById('mobileNav')?.classList.toggle('open'); }
     (window as any).toggleMobileNav = toggleMobileNav;
     function dismissCookies(v: boolean) {
@@ -100,9 +96,17 @@ const orgDesc = lang === 'fr'
       document.getElementById('cookie-banner')?.classList.remove('visible');
     }
     (window as any).dismissCookies = dismissCookies;
-    if (!localStorage.getItem('cookie_consent')) {
-      setTimeout(() => document.getElementById('cookie-banner')?.classList.add('visible'), 1500);
-    }
+
+    document.addEventListener('astro:page-load', () => {
+      document.getElementById('mobileNav')?.classList.remove('open');
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach((e, i) => { if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 80); });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+      if (!localStorage.getItem('cookie_consent')) {
+        setTimeout(() => document.getElementById('cookie-banner')?.classList.add('visible'), 1500);
+      }
+    });
   </script>
 </body>
 </html>
