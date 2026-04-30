@@ -4,7 +4,7 @@ import { useTranslations } from '../../i18n/utils';
 import { supabase } from '../../lib/supabase';
 const lang = 'en';
 const t = useTranslations(lang);
-const { data: events } = await supabase.from('events').select('*').eq('published', true).order('event_date', { ascending: true });
+const { data: events } = await supabase.from('events').select('id,title_en,title_fr,title_ko,event_date,location,description_en,description_fr,description_ko,registration_url,cover_url').eq('published', true).order('event_date', { ascending: true });
 const canonical = 'https://www.it-concept.kr/events/';
 const eventsSchema = events?.length ? {
   "@context": "https://schema.org",
@@ -38,9 +38,10 @@ const eventsSchema = events?.length ? {
         </div>
       ) : events.map(ev => (
         <div class="content-card reveal">
-          <div class="card-cover-placeholder" style="height:120px;background:linear-gradient(135deg,#fff5f5,#ffe4e4)">
-            <svg viewBox="0 0 24 24" style="width:28px;height:28px;stroke:rgba(229,57,53,0.5)"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          </div>
+          {ev.cover_url
+            ? <img src={ev.cover_url} alt={ev.title_en || ''} class="card-cover" loading="lazy" />
+            : <div class="card-cover-placeholder"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+          }
           <div class="card-body">
             <div class="card-tags"><span class="card-tag">{new Date(ev.event_date).toLocaleDateString('en', { month: 'short', day: 'numeric', year: 'numeric' })}</span></div>
             <h2 class="card-title">{ev.title_en || ev.title_fr || ev.title_ko}</h2>

@@ -17,6 +17,7 @@ if (Astro.request.method === 'POST') {
     excerpt_en: form.get('excerpt_en') || null, excerpt_fr: form.get('excerpt_fr') || null, excerpt_ko: form.get('excerpt_ko') || null,
     content_en: form.get('content_en') || null, content_fr: form.get('content_fr') || null, content_ko: form.get('content_ko') || null,
     author: form.get('author') || null,
+    cover_url: form.get('cover_url') || null,
     published_at: published ? new Date().toISOString() : null,
   });
   if (err) error = err.message;
@@ -53,6 +54,7 @@ if (Astro.request.method === 'POST') {
         <div class="form-group"><label>Author</label><input type="text" name="author" placeholder="Jean Dupont" /></div>
         <div class="form-group"><label>Tags (comma-separated)</label><input type="text" name="tags" placeholder="Security, Network, Microsoft" /></div>
       </div>
+      <div class="form-group"><label>Cover image URL</label><input type="url" name="cover_url" placeholder="https://..." /></div>
       <div class="form-group" style="flex-direction:row;align-items:center;gap:10px;margin-bottom:0">
         <input type="checkbox" name="published" id="published" style="width:auto" />
         <label for="published" style="margin-bottom:0">Publish immediately</label>

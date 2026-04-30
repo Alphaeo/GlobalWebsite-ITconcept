@@ -6,7 +6,7 @@ const lang = 'ko';
 const t = useTranslations(lang);
 const { data: events } = await supabase
   .from('events')
-  .select('id,title_ko,title_en,title_fr,event_date,location,description_ko,description_en,description_fr,registration_url')
+  .select('id,title_ko,title_en,title_fr,event_date,location,description_ko,description_en,description_fr,registration_url,cover_url')
   .eq('published', true)
   .order('event_date', { ascending: true });
 const canonical = 'https://www.it-concept.kr/ko/events/';
@@ -34,21 +34,27 @@ const eventsSchema = events?.length ? {
     <span class="section-label">{t('events.label')}</span>
     <h1 class="section-title">{t('events.title')}</h1>
     <p class="section-desc">{t('events.desc')}</p>
-    <div class="events-list">
-      {events?.length ? events.map(ev => (
-        <div class="event-card reveal">
-          <div class="event-date-block">
-            <span class="event-day">{new Date(ev.event_date).toLocaleDateString('ko', { day: '2-digit' })}</span>
-            <span class="event-month">{new Date(ev.event_date).toLocaleDateString('ko', { month: 'short' })}</span>
-          </div>
-          <div class="event-body">
-            <h2>{ev.title_ko || ev.title_en || ev.title_fr}</h2>
-            <p class="event-location">{ev.location}</p>
-            {(ev.description_ko || ev.description_en || ev.description_fr) && <p class="event-desc">{ev.description_ko || ev.description_en || ev.description_fr}</p>}
-            {ev.registration_url && <a href={ev.registration_url} target="_blank" rel="noopener" class="btn-primary" style="margin-top:12px">{t('events.register')}</a>}
+    <div class="cards-grid">
+      {!events?.length ? (
+        <div class="empty-state">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <p>{t('events.empty')}</p>
+        </div>
+      ) : events.map(ev => (
+        <div class="content-card reveal">
+          {ev.cover_url
+            ? <img src={ev.cover_url} alt={ev.title_ko || ev.title_en || ''} class="card-cover" loading="lazy" />
+            : <div class="card-cover-placeholder"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+          }
+          <div class="card-body">
+            <div class="card-tags"><span class="card-tag">{new Date(ev.event_date).toLocaleDateString('ko', { month: 'short', day: 'numeric', year: 'numeric' })}</span></div>
+            <h2 class="card-title">{ev.title_ko || ev.title_en || ev.title_fr}</h2>
+            {(ev.description_ko || ev.description_en || ev.description_fr) && <p class="card-excerpt">{ev.description_ko || ev.description_en || ev.description_fr}</p>}
+            <div class="card-meta"><span>{t('events.location')}: {ev.location}</span></div>
+            {ev.registration_url && <a href={ev.registration_url} target="_blank" rel="noopener" class="btn-primary" style="font-size:0.85rem;padding:10px 18px;margin-top:auto">{t('events.register')}</a>}
           </div>
         </div>
-      )) : <p style="color:var(--text-muted)">{t('events.empty')}</p>}
+      ))}
     </div>
   </section>
 </BaseLayout>

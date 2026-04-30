@@ -13,6 +13,7 @@ if (Astro.request.method === 'POST') {
     event_date: form.get('event_date'),
     location: form.get('location'),
     registration_url: form.get('registration_url') || null,
+    cover_url: form.get('cover_url') || null,
     title_en: form.get('title_en') || null, title_fr: form.get('title_fr') || null, title_ko: form.get('title_ko') || null,
     description_en: form.get('description_en') || null, description_fr: form.get('description_fr') || null, description_ko: form.get('description_ko') || null,
   }).eq('id', id);
@@ -33,6 +34,7 @@ const localDate = ev.event_date ? new Date(ev.event_date).toISOString().slice(0,
         <div class="form-group"><label>Location*</label><input type="text" name="location" value={ev.location} required /></div>
       </div>
       <div class="form-group"><label>Registration URL</label><input type="url" name="registration_url" value={ev.registration_url ?? ''} /></div>
+      <div class="form-group"><label>Cover image URL</label><input type="url" name="cover_url" value={ev.cover_url ?? ''} placeholder="https://..." /></div>
     </div>
     <div class="admin-card">
       <h3 style="font-family:var(--font-display);font-weight:700;margin-bottom:20px;font-size:1rem">🇬🇧 English</h3>
