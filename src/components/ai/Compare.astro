@@ -5,10 +5,10 @@ const { lang } = Astro.props;
 const t = useAITranslations(lang);
 
 const rows = [
-  { key: 'bestfor',    icon: '🎯', label: t('cmp.bestfor') },
-  { key: 'stage',      icon: '📍', label: t('cmp.stage') },
-  { key: 'engagement', icon: '⏱',  label: t('cmp.engagement') },
-  { key: 'audience',   icon: '👥', label: t('cmp.audience') },
+  { key: 'bestfor',    label: t('cmp.bestfor') },
+  { key: 'stage',      label: t('cmp.stage') },
+  { key: 'engagement', label: t('cmp.engagement') },
+  { key: 'audience',   label: t('cmp.audience') },
 ];
 ---
 <section id="compare">
@@ -30,9 +30,9 @@ const rows = [
         </tr>
       </thead>
       <tbody>
-        {rows.map(({ key, icon, label }) => (
+        {rows.map(({ key, label }) => (
           <tr>
-            <td class="cmp-row-label">{icon} {label}</td>
+            <td class="cmp-row-label">{label}</td>
             {[1,2,3,4].map(n => (
               <td>{t(`cmp.svc${n}.${key}`)}</td>
             ))}
@@ -117,11 +117,11 @@ const rows = [
 
 /* ── Row label ── */
 .cmp-row-label {
-  color: #6b7280 !important;
-  font-size: 0.72rem !important;
+  color: #e5e7eb !important;
+  font-size: 0.8rem !important;
   font-weight: 700 !important;
-  text-transform: uppercase;
-  letter-spacing: 0.09em;
+  font-family: var(--font-display);
+  letter-spacing: 0.03em;
   white-space: nowrap;
   padding-top: 20px !important;
 }
