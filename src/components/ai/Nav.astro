@@ -66,4 +66,7 @@ const base = lang === 'fr' ? '/fr/ai/' : lang === 'ko' ? '/ko/ai/' : '/ai/';
   white-space: nowrap;
 }
 .nav-back-link:hover { color: rgba(255,255,255,0.8); }
+@media (max-width: 960px) {
+  .nav-back-link { display: none; }
+}
 </style>
