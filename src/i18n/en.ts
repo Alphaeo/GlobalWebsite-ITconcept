@@ -11,9 +11,9 @@ export default {
   'nav.booking': 'Book a call',
   'nav.ai': 'AI Solutions',
 
-  'hero.tag': 'IT Consulting & Outsourcing — Seoul',
+  'hero.tag': 'IT Consulting & Outsourcing · Seoul',
   'hero.h1': 'Your IT partner <mark>in South Korea</mark>',
-  'hero.sub': 'Infrastructure, network, security, development and 24/7 support — for international companies established in Korea.',
+  'hero.sub': 'Infrastructure, network, security, development and 24/7 support, for international companies established in Korea.',
   'hero.cta1': 'Discover our services',
   'hero.cta2': 'Contact us',
 
@@ -40,7 +40,7 @@ export default {
 
   'team.label': 'The team',
   'team.title': 'Our Team',
-  'team.desc': 'IT-Concept\'s multicultural team of IT Technicians and IT Engineers — trilingual, available around the clock, on-site or remote.',
+  'team.desc': 'IT-Concept\'s multicultural team of IT Technicians and IT Engineers: trilingual, available around the clock, on-site or remote.',
   'team.fact1': 'IT Technicians & Engineers',
   'team.fact2': 'English · Korean · French',
   'team.fact3': 'Available 24/7',
@@ -83,7 +83,7 @@ export default {
   'apply.motivation': 'Cover letter',
   'apply.motivation.ph': 'Tell us about your motivation and relevant experience...',
   'apply.cv': 'CV / Resume',
-  'apply.cv.hint': 'PDF, DOC or DOCX — max 10 MB',
+  'apply.cv.hint': 'PDF, DOC or DOCX (max 10 MB)',
   'apply.extra': 'Additional document (optional)',
   'apply.submit': 'Send my application',
   'apply.sent': 'Application sent! We will review your profile and get back to you shortly.',

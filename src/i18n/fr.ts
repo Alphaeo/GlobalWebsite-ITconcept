@@ -11,9 +11,9 @@ export default {
   'nav.booking': 'Prendre RDV',
   'nav.ai': 'Solutions IA',
 
-  'hero.tag': 'Conseil & Infogérance IT — Séoul',
+  'hero.tag': 'Conseil & Infogérance IT · Séoul',
   'hero.h1': 'Votre partenaire IT <mark>en Corée du Sud</mark>',
-  'hero.sub': 'Infrastructure, réseau, sécurité, développement et support 24/7 — pour les entreprises internationales implantées en Corée.',
+  'hero.sub': 'Infrastructure, réseau, sécurité, développement et support 24/7, pour les entreprises internationales implantées en Corée.',
   'hero.cta1': 'Découvrir nos services',
   'hero.cta2': 'Nous contacter',
 
@@ -40,7 +40,7 @@ export default {
 
   'team.label': 'L\'équipe',
   'team.title': 'Notre équipe',
-  'team.desc': 'Une équipe multiculturelle de techniciens et ingénieurs IT — trilingue, disponible 24h/24, en présentiel ou à distance.',
+  'team.desc': 'Une équipe multiculturelle de techniciens et ingénieurs IT: trilingue, disponible 24h/24, en présentiel ou à distance.',
   'team.fact1': 'Techniciens & Ingénieurs IT',
   'team.fact2': 'Anglais · Coréen · Français',
   'team.fact3': 'Disponibles 24h/24',
@@ -83,7 +83,7 @@ export default {
   'apply.motivation': 'Lettre de motivation',
   'apply.motivation.ph': 'Présentez votre motivation et votre expérience...',
   'apply.cv': 'CV',
-  'apply.cv.hint': 'PDF, DOC ou DOCX — max 10 Mo',
+  'apply.cv.hint': 'PDF, DOC ou DOCX (max 10 Mo)',
   'apply.extra': 'Document complémentaire (optionnel)',
   'apply.submit': 'Envoyer ma candidature',
   'apply.sent': 'Candidature envoyée ! Nous étudierons votre profil et reviendrons vers vous rapidement.',

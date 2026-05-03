@@ -11,9 +11,9 @@ export default {
   'nav.booking': '미팅 예약',
   'nav.ai': 'AI 솔루션',
 
-  'hero.tag': 'IT 컨설팅 & 아웃소싱 — 서울',
+  'hero.tag': 'IT 컨설팅 & 아웃소싱 · 서울',
   'hero.h1': '한국의 <mark>IT 파트너</mark>',
-  'hero.sub': '인프라, 네트워크, 보안, 개발 및 24/7 지원 — 한국에 진출한 국제 기업을 위해.',
+  'hero.sub': '인프라, 네트워크, 보안, 개발 및 24/7 지원, 한국에 진출한 국제 기업을 위해.',
   'hero.cta1': '서비스 보기',
   'hero.cta2': '문의하기',
 
@@ -40,7 +40,7 @@ export default {
 
   'team.label': '팀 소개',
   'team.title': '우리 팀',
-  'team.desc': 'IT-Concept의 다문화 IT 팀 — 엔지니어와 기술자로 구성, 3개 언어 지원, 24시간 현장 및 원격 지원.',
+  'team.desc': 'IT-Concept의 다문화 IT 팀: 엔지니어와 기술자로 구성, 3개 언어 지원, 24시간 현장 및 원격 지원.',
   'team.fact1': 'IT 기술자 & 엔지니어',
   'team.fact2': '영어 · 한국어 · 프랑스어',
   'team.fact3': '24/7 지원',
@@ -83,7 +83,7 @@ export default {
   'apply.motivation': '자기소개서',
   'apply.motivation.ph': '지원 동기와 관련 경력을 작성해 주세요...',
   'apply.cv': '이력서',
-  'apply.cv.hint': 'PDF, DOC 또는 DOCX — 최대 10MB',
+  'apply.cv.hint': 'PDF, DOC 또는 DOCX (최대 10MB)',
   'apply.extra': '추가 서류 (선택)',
   'apply.submit': '지원서 제출',
   'apply.sent': '지원서가 전송되었습니다! 검토 후 빠른 시일 내에 연락드리겠습니다.',
