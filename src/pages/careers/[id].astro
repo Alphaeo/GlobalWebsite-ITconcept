@@ -1,4 +1,4 @@
----
+﻿---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { useTranslations } from '../../i18n/utils';
 import { supabase } from '../../lib/supabase';
@@ -13,6 +13,7 @@ if (!job) return Astro.redirect('/careers/');
 const title = job.title_en || job.title_fr || job.title_ko || 'Job offer';
 const description = job.description_en || job.description_fr || job.description_ko || '';
 const sent = Astro.url.searchParams.get('sent') === '1';
+const careersFormAction = `https://formsubmit.co/${import.meta.env.PUBLIC_CAREERS_EMAIL ?? 'louis.mathis@it-concept.kr'}`;
 const canonical = `https://www.it-concept.kr/careers/${id}/`;
 const jobSchema = {
   "@context": "https://schema.org",
@@ -68,7 +69,7 @@ const jobSchema = {
       )}
 
       <form
-        action="https://formsubmit.co/louis.mathis@it-concept.kr"
+        action={careersFormAction}
         method="POST"
         enctype="multipart/form-data"
       >

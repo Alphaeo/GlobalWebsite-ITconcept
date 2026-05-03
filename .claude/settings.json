@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/Admin/itconcept-ai-astro/**)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:4321)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:4322)",
+      "Bash(npx kill-port *)",
+      "Bash(taskkill /F /IM node.exe)",
+      "Bash(cp /c/Users/Admin/itconcept-ai-astro/src/components/Certifications.astro /c/Users/Admin/GlobalWebsite-ITconcept/src/components/ai/)",
+      "Bash(cp /c/Users/Admin/itconcept-ai-astro/src/components/Company.astro /c/Users/Admin/GlobalWebsite-ITconcept/src/components/ai/)",
+      "Bash(cp /c/Users/Admin/itconcept-ai-astro/src/components/Compare.astro /c/Users/Admin/GlobalWebsite-ITconcept/src/components/ai/)",
+      "Bash(cp /c/Users/Admin/itconcept-ai-astro/src/components/Contact.astro /c/Users/Admin/GlobalWebsite-ITconcept/src/components/ai/)",
+      "Bash(cp /c/Users/Admin/itconcept-ai-astro/src/components/CookieBanner.astro /c/Users/Admin/GlobalWebsite-ITconcept/src/components/ai/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:4322/ai/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:4322/fr/ai/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:4322/ko/ai/)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:4322/)",
+      "Bash(wmic process *)",
+      "Bash(taskkill /PID 19820 /F)",
+      "PowerShell(Stop-Process -Id 19820 -Force)",
+      "Bash(python3 -)",
+      "Bash(curl -s http://localhost:4322/ai/)",
+      "Bash(grep -A5 \"---\" /c/Users/Admin/GlobalWebsite-ITconcept/src/pages/blog/index.astro)"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\Admin\\itconcept-ai-astro\\src\\styles",
+      "c:\\Users\\Admin\\.claude\\projects\\c--Users-Admin-GlobalWebsite-ITconcept\\memory"
+    ]
+  }
+}

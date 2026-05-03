@@ -1,4 +1,4 @@
----
+﻿---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { supabase } from '../../../lib/supabase';
 import { useTranslations } from '../../../i18n/utils';
@@ -51,7 +51,7 @@ const eventsSchema = events?.length ? {
             <h2 class="card-title">{ev.title_ko || ev.title_en || ev.title_fr}</h2>
             {(ev.description_ko || ev.description_en || ev.description_fr) && <p class="card-excerpt">{ev.description_ko || ev.description_en || ev.description_fr}</p>}
             <div class="card-meta"><span>{t('events.location')}: {ev.location}</span></div>
-            {ev.registration_url && <a href={ev.registration_url} target="_blank" rel="noopener" class="btn-primary" style="font-size:0.85rem;padding:10px 18px;margin-top:auto">{t('events.register')}</a>}
+            {ev.registration_url && <a href={ev.registration_url} target="_blank" rel="noopener noreferrer" class="btn-primary" style="font-size:0.85rem;padding:10px 18px;margin-top:auto">{t('events.register')}</a>}
           </div>
         </div>
       ))}

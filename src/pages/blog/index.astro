@@ -6,7 +6,7 @@ const lang = 'en';
 const t = useTranslations(lang);
 const { data: articles } = await supabase.from('articles').select('id,slug,title_en,excerpt_en,author,tags,cover_url,published_at').eq('published', true).order('published_at', { ascending: false });
 ---
-<BaseLayout lang={lang} title={`Blog — IT-CONCEPT`}>
+<BaseLayout lang={lang} title="Blog — IT-CONCEPT" desc={t('blog.desc')} canonical="https://www.it-concept.kr/blog/">
   <section style="padding-top: calc(var(--nav-h) + 60px)">
     <span class="section-label reveal">{t('blog.label')}</span>
     <h1 class="section-title reveal">{t('blog.title')}</h1>

@@ -10,7 +10,7 @@ const { data: jobs } = await supabase
   .eq('published', true)
   .order('created_at', { ascending: false });
 ---
-<BaseLayout lang={lang}>
+<BaseLayout lang={lang} title="Recrutement — IT-CONCEPT" desc={t('careers.desc')} canonical="https://www.it-concept.kr/fr/careers/">
   <section id="careers">
     <span class="section-label">{t('careers.label')}</span>
     <h1 class="section-title">{t('careers.title')}</h1>

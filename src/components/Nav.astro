@@ -1,4 +1,4 @@
----
+﻿---
 import { useTranslations } from '../i18n/utils';
 import type { Lang } from '../i18n/utils';
 export interface Props { lang: Lang; }
@@ -22,7 +22,7 @@ const p = (path: string) => isHome ? path : `${base}${path === '/' ? '/' : path}
     <li><a href={lang === 'fr' ? '/fr/ai/' : lang === 'ko' ? '/ko/ai/' : '/ai/'} class="nav-ai-link">{t('nav.ai')}</a></li>
   </ul>
   <div style="display:flex;align-items:center;gap:12px">
-    <a href="https://calendly.com/it-concept" target="_blank" rel="noopener" class="nav-cta">
+    <a href="https://calendly.com/it-concept" target="_blank" rel="noopener noreferrer" class="nav-cta">
       <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
       {t('nav.booking')}
     </a>

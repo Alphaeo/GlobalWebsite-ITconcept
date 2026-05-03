@@ -1,8 +1,9 @@
----
+﻿---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { useTranslations } from '../../i18n/utils';
 const lang = 'fr';
 const t = useTranslations(lang);
+const contactFormAction = `https://formspree.io/${import.meta.env.PUBLIC_CONTACT_EMAIL ?? 'louis.mathis@it-concept.kr'}`;
 const services = [
   { key: 'svc1', icon: '<path d="M9 17H7A5 5 0 0 1 7 7h2"/><path d="M15 7h2a5 5 0 0 1 0 10h-2"/><line x1="8" y1="12" x2="16" y2="12"/>' },
   { key: 'svc2', icon: '<rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>' },
@@ -146,7 +147,7 @@ const stats = [
     <p class="section-desc reveal">{t('expertise.desc')}</p>
     <div class="logo-marquee-wrap reveal">
       <div class="logo-marquee">
-        {logos.map(l => <div class="logo-item"><img src={l.src} alt={l.alt} /></div>)}
+        {logos.map(l => <div class="logo-item"><img src={l.src} alt={l.alt} loading="lazy" /></div>)}
         {logos.map(l => <div class="logo-item"><img src={l.src} alt="" aria-hidden="true" /></div>)}
       </div>
     </div>
@@ -187,9 +188,9 @@ const stats = [
             <a href="tel:+8225537854">+82 2-553-7854</a>
           </div>
         </div>
-        <a href="https://calendly.com/it-concept" target="_blank" rel="noopener" class="btn-primary">{t('contact.booking')}</a>
+        <a href="https://calendly.com/it-concept" target="_blank" rel="noopener noreferrer" class="btn-primary">{t('contact.booking')}</a>
       </div>
-      <form class="contact-form reveal" id="contact-form">
+      <form class="contact-form reveal" id="contact-form" data-action={contactFormAction}>
         <div class="form-row">
           <div class="form-group"><label>{t('form.name')}</label><input type="text" name="name" placeholder={t('form.name.ph')} required /></div>
           <div class="form-group"><label>{t('form.email')}</label><input type="email" name="email" placeholder={t('form.email.ph')} required /></div>
@@ -226,7 +227,7 @@ const stats = [
       const btn = document.getElementById('form-btn') as HTMLButtonElement;
       btn.disabled = true; btn.textContent = '...';
       try {
-        const res = await fetch('https://formspree.io/louis.mathis@it-concept.kr', { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+        const res = await fetch(form.dataset.action || '', { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
         if (res.ok) { form.reset(); btn.style.display = 'none'; (document.getElementById('form-success') as HTMLElement).style.display = 'block'; }
         else throw new Error();
       } catch { btn.disabled = false; btn.textContent = 'Réessayer'; (document.getElementById('form-error') as HTMLElement).style.display = 'block'; }
