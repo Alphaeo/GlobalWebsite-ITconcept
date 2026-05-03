@@ -5,10 +5,10 @@ const { lang } = Astro.props;
 const t = useAITranslations(lang);
 
 const rows = [
-  { key: 'bestfor',    icon: '🎯' },
-  { key: 'stage',      icon: '📍' },
-  { key: 'engagement', icon: '⏱' },
-  { key: 'audience',   icon: '👥' },
+  { key: 'bestfor',    icon: '🎯', label: t('cmp.bestfor') },
+  { key: 'stage',      icon: '📍', label: t('cmp.stage') },
+  { key: 'engagement', icon: '⏱',  label: t('cmp.engagement') },
+  { key: 'audience',   icon: '👥', label: t('cmp.audience') },
 ];
 ---
 <section id="compare">
@@ -16,112 +16,105 @@ const rows = [
   <h2 class="section-title reveal">{t('cmp.title')}</h2>
   <p class="section-desc reveal">{t('cmp.desc')}</p>
 
-  <div class="cmp-cards reveal">
-    {[1, 2, 3, 4].map(n => (
-      <div class="cmp-card">
-        <div class="cmp-card-head">
-          <span class="cmp-num">{n}</span>
-          <span class="cmp-svc-name">{t(`svc${n}.title`)}</span>
-        </div>
-        <div class="cmp-card-body">
-          {rows.map(({ key, icon }) => (
-            <div class="cmp-row">
-              <span class="cmp-row-key"><span>{icon}</span>{t(`cmp.${key}`)}</span>
-              <span class="cmp-row-val">{t(`cmp.svc${n}.${key}`)}</span>
-            </div>
+  <div class="cmp-wrap reveal">
+    <table class="cmp-table">
+      <thead>
+        <tr>
+          <th class="cmp-th-empty"></th>
+          {[1,2,3,4].map(n => (
+            <th>
+              <span class="cmp-badge">{n}</span>
+              {t(`svc${n}.title`)}
+            </th>
           ))}
-        </div>
-      </div>
-    ))}
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map(({ key, icon, label }) => (
+          <tr>
+            <td class="cmp-row-label">{icon} {label}</td>
+            {[1,2,3,4].map(n => (
+              <td>{t(`cmp.svc${n}.${key}`)}</td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
   </div>
 </section>
 
 <style>
-.cmp-cards {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  margin-top: 48px;
+.cmp-wrap {
+  margin-top: 44px;
+  overflow-x: auto;
 }
 
-.cmp-card {
-  background: #161B22;
-  border-radius: 16px;
-  border: 1px solid rgba(255,255,255,0.09);
-  overflow: hidden;
-  transition: border-color 0.25s, transform 0.25s;
-}
-.cmp-card:hover {
-  border-color: rgba(229,57,53,0.4);
-  transform: translateY(-3px);
+.cmp-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 640px;
 }
 
-.cmp-card-head {
-  background: #21262D;
-  border-top: 3px solid #E53935;
-  padding: 20px;
-  display: flex;
+/* ── Headers ── */
+.cmp-th-empty {
+  width: 150px;
+}
+
+.cmp-table thead th {
+  padding: 8px 20px 20px;
+  text-align: left;
+  border-bottom: 2px solid #2e2e2e;
+  color: #ffffff;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  vertical-align: bottom;
+  line-height: 1.35;
+}
+
+.cmp-badge {
+  display: inline-flex;
   align-items: center;
-  gap: 12px;
-}
-
-.cmp-num {
-  width: 30px;
-  height: 30px;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
   background: #E53935;
   color: #fff;
-  font-family: var(--font-display);
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  box-shadow: 0 3px 10px rgba(229,57,53,0.4);
+  margin-right: 8px;
+  margin-bottom: 2px;
+  vertical-align: middle;
 }
 
-.cmp-svc-name {
-  color: #fff;
-  font-family: var(--font-display);
-  font-size: 0.82rem;
-  font-weight: 700;
-  line-height: 1.3;
+/* ── Body rows ── */
+.cmp-table tbody tr {
+  border-bottom: 1px solid #272727;
+}
+.cmp-table tbody tr:last-child {
+  border-bottom: none;
+}
+.cmp-table tbody tr:hover td {
+  color: #e5e7eb;
 }
 
-.cmp-card-body { }
-
-.cmp-row {
-  padding: 14px 20px;
-  border-bottom: 1px solid rgba(255,255,255,0.07);
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
+.cmp-table tbody td {
+  padding: 18px 20px;
+  vertical-align: top;
+  color: #9ca3af;
+  font-size: 0.85rem;
+  line-height: 1.6;
 }
-.cmp-row:last-child { border-bottom: none; }
 
-.cmp-row-key {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 0.68rem;
-  font-weight: 700;
+/* ── Row label ── */
+.cmp-row-label {
+  color: #6b7280 !important;
+  font-size: 0.72rem !important;
+  font-weight: 700 !important;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: rgba(255,255,255,0.4);
-}
-
-.cmp-row-val {
-  font-size: 0.83rem;
-  font-weight: 500;
-  color: rgba(255,255,255,0.85);
-  line-height: 1.5;
-}
-
-@media (max-width: 900px) {
-  .cmp-cards { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 500px) {
-  .cmp-cards { grid-template-columns: 1fr; }
+  letter-spacing: 0.09em;
+  white-space: nowrap;
+  padding-top: 20px !important;
 }
 </style>
