@@ -4,88 +4,159 @@ export interface Props { lang: 'en' | 'fr' | 'ko'; }
 const { lang } = Astro.props;
 const t = useAITranslations(lang);
 
-const profileRows = [
-  { key: 'bestfor', icon: '🎯' },
-  { key: 'stage',   icon: '📍' },
+const rows = [
+  { key: 'bestfor',    icon: '🎯' },
+  { key: 'stage',      icon: '📍' },
   { key: 'engagement', icon: '⏱' },
-  { key: 'audience', icon: '👥' },
+  { key: 'audience',   icon: '👥' },
 ];
+const svcs = [1, 2, 3, 4];
 ---
 <section id="compare">
   <span class="section-label reveal">{t('cmp.label')}</span>
   <h2 class="section-title reveal">{t('cmp.title')}</h2>
   <p class="section-desc reveal">{t('cmp.desc')}</p>
-  <div class="reveal" style="overflow-x:auto;margin-top:40px">
-    <table class="cmp-table">
-      <thead>
-        <tr>
-          <th></th>
-          <th>
-            <span class="cmp-svc-num">1</span>
-            {t('svc1.title')}
-          </th>
-          <th>
-            <span class="cmp-svc-num">2</span>
-            {t('svc2.title')}
-          </th>
-          <th>
-            <span class="cmp-svc-num">3</span>
-            {t('svc3.title')}
-          </th>
-          <th>
-            <span class="cmp-svc-num">4</span>
-            {t('svc4.title')}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {profileRows.map(({ key, icon }) => (
-          <tr class="cmp-profile-row">
-            <td><div class="cmp-row-label"><span class="cmp-row-icon">{icon}</span>{t(`cmp.${key}`)}</div></td>
-            <td>{t(`cmp.svc1.${key}`)}</td>
-            <td>{t(`cmp.svc2.${key}`)}</td>
-            <td>{t(`cmp.svc3.${key}`)}</td>
-            <td>{t(`cmp.svc4.${key}`)}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+
+  <div class="cmp-scroll reveal">
+    <div class="cmp-grid">
+
+      <div class="cmp-spacer"></div>
+      {svcs.map(n => (
+        <div class="cmp-col-head">
+          <span class="cmp-num">{n}</span>
+          <span class="cmp-col-title">{t(`svc${n}.title`)}</span>
+        </div>
+      ))}
+
+      {rows.flatMap(({ key, icon }, ri) => [
+        <div class={`cmp-label${ri % 2 === 1 ? ' cmp-alt' : ''}`}>
+          <span class="cmp-icon">{icon}</span>
+          {t(`cmp.${key}`)}
+        </div>,
+        ...svcs.map(n => (
+          <div class={`cmp-cell${ri % 2 === 1 ? ' cmp-alt' : ''}`}>
+            {t(`cmp.svc${n}.${key}`)}
+          </div>
+        ))
+      ])}
+
+    </div>
   </div>
 </section>
 
 <style>
-.cmp-svc-num {
+.cmp-scroll {
+  overflow-x: auto;
+  margin-top: 48px;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 2%, black 98%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 2%, black 98%, transparent 100%);
+}
+
+.cmp-grid {
+  display: grid;
+  grid-template-columns: 160px repeat(4, 1fr);
+  min-width: 680px;
+  gap: 0;
+}
+
+/* ── Column headers ── */
+.cmp-spacer {
+  grid-column: 1;
+}
+
+.cmp-col-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 24px 16px 20px;
+  background: rgba(255,255,255,0.04);
+  border-top: 2px solid rgba(229,57,53,0.55);
+  border-left: 1px solid rgba(255,255,255,0.05);
+  text-align: center;
+}
+.cmp-col-head:last-child {
+  border-radius: 0 12px 0 0;
+}
+.cmp-col-head:nth-child(2) {
+  border-radius: 12px 0 0 0;
+}
+
+.cmp-num {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 22px;
-  height: 22px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  background: var(--red);
+  background: linear-gradient(135deg, #E53935, #c62828);
   color: #fff;
-  font-size: 0.7rem;
-  font-weight: 700;
-  margin-right: 6px;
-  flex-shrink: 0;
-}
-
-.cmp-profile-row td {
   font-size: 0.85rem;
-  color: var(--text);
-  vertical-align: top;
-  line-height: 1.45;
+  font-weight: 700;
+  font-family: var(--font-display);
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(229,57,53,0.35);
 }
 
-.cmp-row-label {
+.cmp-col-title {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.75);
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+}
+
+/* ── Row labels ── */
+.cmp-label {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-weight: 600;
+  gap: 8px;
+  padding: 18px 14px 18px 0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.35);
+  border-top: 1px solid rgba(255,255,255,0.06);
   white-space: nowrap;
 }
 
-.cmp-row-icon {
+.cmp-icon {
   font-style: normal;
-  flex-shrink: 0;
+  font-size: 0.95rem;
+  opacity: 0.7;
+}
+
+/* ── Data cells ── */
+.cmp-cell {
+  padding: 18px 16px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.5;
+  text-align: center;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  border-left: 1px solid rgba(255,255,255,0.05);
+  background: rgba(255,255,255,0.02);
+}
+
+.cmp-alt,
+.cmp-cell.cmp-alt {
+  background: rgba(255,255,255,0.05);
+}
+.cmp-label.cmp-alt {
+  background: transparent;
+}
+
+/* ── Bottom border on last row ── */
+.cmp-grid > :nth-last-child(-n+5) {
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.cmp-grid > :nth-last-child(-n+5).cmp-cell:last-child {
+  border-radius: 0 0 12px 0;
+}
+.cmp-grid > :nth-last-child(5).cmp-cell {
+  border-radius: 0 0 0 12px;
 }
 </style>
