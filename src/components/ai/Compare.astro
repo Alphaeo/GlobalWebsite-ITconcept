@@ -103,9 +103,6 @@ const rows = [
 .cmp-table tbody tr:last-child {
   border-bottom: none;
 }
-.cmp-table tbody tr:hover td {
-  color: #e5e7eb;
-}
 
 .cmp-table tbody td {
   padding: 18px 20px;
@@ -113,6 +110,27 @@ const rows = [
   color: #9ca3af;
   font-size: 0.85rem;
   line-height: 1.6;
+  transition: color 0.2s, background 0.2s;
+}
+
+.cmp-table thead th {
+  transition: color 0.2s;
+}
+
+/* ── Column hover highlight ── */
+.cmp-table:has(th:nth-child(n+2):hover) td:not(.cmp-row-label) {
+  color: #4b5563;
+}
+.cmp-table:has(th:nth-child(n+2):hover) thead th:not(:hover) {
+  color: #4b5563;
+}
+
+.cmp-table:has(th:nth-child(2):hover) td:nth-child(2),
+.cmp-table:has(th:nth-child(3):hover) td:nth-child(3),
+.cmp-table:has(th:nth-child(4):hover) td:nth-child(4),
+.cmp-table:has(th:nth-child(5):hover) td:nth-child(5) {
+  color: #f3f4f6;
+  background: rgba(229,57,53,0.07);
 }
 
 /* ── Row label ── */
