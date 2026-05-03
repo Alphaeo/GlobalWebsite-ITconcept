@@ -384,6 +384,12 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 60px 5%
   .job-card { flex-direction: column; align-items: flex-start; }
   .admin-stat-grid { grid-template-columns: 1fr; }
   .team-inner { grid-template-columns: 1fr; gap: 40px; }
-  .hero-ctas { flex-direction: column; align-items: flex-start; }
+  .team-facts { grid-template-columns: 1fr; }
+  .hero-ctas { flex-direction: column; align-items: stretch; }
   .modal-box { padding: 28px 20px; }
+  .cmp-wrap { border-radius: 8px; }
+}
+@media (max-width: 480px) {
+  .hero-stats { grid-template-columns: 1fr; }
+  .partners-logos { gap: 24px 32px; }
 }

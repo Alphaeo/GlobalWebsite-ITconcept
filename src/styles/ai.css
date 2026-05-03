@@ -1098,7 +1098,7 @@ footer {
 
 /* ─── RESPONSIVE ─── */
 @media (max-width: 960px) {
-  .nav-links { display: none; }
+  .nav-links, .nav-cta { display: none; }
   .nav-hamburger { display: flex; }
   .hero-stats { position: static; flex-direction: row; flex-wrap: wrap; margin-top: 50px; }
   .stat-card { min-width: 150px; }
@@ -1106,7 +1106,7 @@ footer {
   .pocs-grid { grid-template-columns: 1fr; }
   .packages-grid { grid-template-columns: 1fr; }
   .pkg-card.featured { transform: none; }
-  .team-grid { grid-template-columns: 1fr; max-width: 440px; }
+  .team-grid { grid-template-columns: 1fr; max-width: 100%; }
   .contact-inner { grid-template-columns: 1fr; gap: 50px; }
   .form-row { grid-template-columns: 1fr; }
   .pos-grid { grid-template-columns: 1fr; }
